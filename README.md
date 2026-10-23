@@ -4,7 +4,7 @@ Ce dépôt fournit l'extension Quarto `cerema`, qui définit cinq formats : `ce
 
 ## Prise en main : démarrer un nouveau document
 
-Cet aide-mémoire s'adresse à l'auteur qui reprend un nouveau document avec l'extension, en version 1.3.0.
+Cet aide-mémoire s'adresse à l'auteur qui reprend un nouveau document avec l'extension, en version 1.3.1.
 
 ### Prérequis
 
@@ -73,12 +73,12 @@ Si le document contient du Python, on indique l'interpréteur de l'environnement
 | `cerema-typst` | rapport d'étude | PDF |
 | `cerema-docx` | document à relire ou amender | Word |
 | `cerema-pptx` | présentation à retoucher | PowerPoint |
-| `cerema-revealjs` | présentation projetée | HTML |
+| `cerema-revealjs` | présentation projetée | HTML (`doc.diapo.html`) |
 | `cerema-html` | page ou site | HTML |
 
 ### Écrire pour plusieurs formats à la fois
 
-- `#` ouvre une partie (diapositive de chapitre en pptx et revealjs) et `##` une section (une diapositive en pptx et revealjs). Un document pensé pour le PDF et le Word produit donc beaucoup de diapositives.
+- `#` ouvre une partie (diapositive de chapitre en pptx et revealjs) et `##` une section (une diapositive en pptx et revealjs). Un document pensé pour le PDF et le Word produit donc beaucoup de diapositives. En revealjs, un texte placé directement sous un titre `#`, sans `##`, passe sur la diapositive suivante : la diapositive de chapitre reste nette. La présentation revealjs est écrite dans `doc.diapo.html`, pour ne pas écraser `doc.html` du format `cerema-html`.
 - Tableaux : s'écrivent en Markdown. La légende et la numérotation se posent sous le tableau par `: Légende {#tbl-nom}`, et le renvoi s'écrit `@tbl-nom`. Le modèle de tableau (en-tête indigo, lignes alternées) s'applique automatiquement en PDF, Word et HTML. En PowerPoint, c'est le style de tableau du modèle.
 - Encadrés : `::: {.callout-note}` (ainsi que tip, warning, important et caution), avec un titre facultatif donné par `## Titre` en première ligne. Un encadré numéroté s'écrit `::: {#nte-nom .callout-note}` et se cite par `@nte-nom`. En PowerPoint, Quarto ne prend pas en charge les encadrés numérotés. En Word, ils gardent le rendu de Quarto.
 - Graphiques Altair : `import cerema_altair` en tête de cellule. Ils sont interactifs en HTML et revealjs, et rendus en image PNG en PDF, Word et PowerPoint.
@@ -442,7 +442,7 @@ Pour le Word, `pandoc-reference.docx` s'obtient par `quarto pandoc -o pandoc-ref
         └── memory.md
 ```
 
-Le rendu de `template.qmd` produit en outre `template.html` et le dossier `template_files/`.
+Le rendu de `template.qmd` produit en outre `template.html` (page), `template.diapo.html` (présentation revealjs) et le dossier `template_files/`.
 
 ## Origine des ressources
 

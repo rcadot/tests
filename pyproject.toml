@@ -1,6 +1,6 @@
 [project]
 name = "cerema-quarto"
-version = "1.3.0"
+version = "1.3.1"
 description = "Extension Quarto Cerema : rapport PDF, Word, PowerPoint, pages HTML et revealjs"
 requires-python = ">=3.10"
 dependencies = [
