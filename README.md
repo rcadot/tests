@@ -1,6 +1,6 @@
-# Modèle Quarto revealjs Cerema
+# Modèles Quarto Cerema : présentation et rapport
 
-Ce dépôt fournit l'extension Quarto `cerema`, qui définit le format `cerema-revealjs`. Elle transpose le design system du Cerema, tel que le décrit le modèle PowerPoint « Diaporama Cerema 2026 » : couleurs indigo et corail, dégradé signature, police Marianne pour le texte courant, Arial gras pour les titres et Spectral italique pour le verbatim. La diapositive est au format 16:9, soit 1280 x 720 px ; l'échelle retenue fait correspondre 1 pt du modèle (960 x 540 pt) à 4/3 px.
+Ce dépôt fournit l'extension Quarto `cerema`, qui définit deux formats : `cerema-revealjs` (présentation) et `cerema-typst` (rapport d'étude en PDF, compilé par Typst). Elle transpose le design system du Cerema, tel que le décrit le modèle PowerPoint « Diaporama Cerema 2026 » : couleurs indigo et corail, dégradé signature, police Marianne pour le texte courant, Arial gras pour les titres et Spectral italique pour le verbatim. La diapositive est au format 16:9, soit 1280 x 720 px ; l'échelle retenue fait correspondre 1 pt du modèle (960 x 540 pt) à 4/3 px.
 
 ## Installation
 
@@ -9,7 +9,7 @@ Deux voies sont possibles.
 - Copier le dossier `_extensions/cerema` dans le dossier `_extensions` du projet cible.
 - Exécuter `quarto use template rcadot/tests` dans un dossier vide. Cette commande suppose que le dépôt soit publié sur GitHub sous ce nom ; elle n'est donc à utiliser que dans ce cas.
 
-L'extension requiert Quarto 1.4 ou supérieur. L'en-tête YAML minimal d'une présentation est le suivant :
+L'extension requiert Quarto 1.6 ou supérieur, car le format Typst exige Typst 0.12, fourni à partir de cette version. Le rendu a été testé avec Quarto 1.7.32. L'en-tête YAML minimal d'une présentation est le suivant :
 
 ```yaml
 ---
@@ -105,6 +105,54 @@ import cerema_altair  # noqa: F401
 
 Les graphiques Altair chargent Vega depuis un CDN : une connexion est donc nécessaire lors de la projection.
 
+## Rapport d'étude (format cerema-typst)
+
+Un même document peut déclarer les deux formats, la sortie se choisissant au rendu.
+
+```yaml
+format:
+  cerema-typst: default
+  cerema-revealjs: default
+```
+
+```sh
+quarto render rapport.qmd --to cerema-typst
+quarto render rapport.qmd --to cerema-revealjs
+```
+
+Sans `--to`, Quarto produit tous les formats déclarés. Le fichier `rapport.qmd` sert d'exemple.
+
+Le PDF produit comporte, dans l'ordre : la couverture (bloc-marque République française, logo Cerema, photo, titre sur fond blanc, sous-titre sur fond indigo, bandeau corail portant le type de document et la date, mention de certification ISO 9001, logos partenaires), une page de présentation du Cerema, le résumé (si `abstract` est renseigné), le sommaire, le contenu et une page de fin.
+
+| Clé | Effet |
+|---|---|
+| `title`, `subtitle` | Titre et sous-titre de la couverture et du pied de page |
+| `shorttitle` | Titre court du pied de page (à défaut, le titre complet) |
+| `author` | Auteurs, repris dans les propriétés du PDF |
+| `date` | Date de la couverture, au format « octobre 2026 » |
+| `abstract` | Résumé de l'étude, sur une page dédiée |
+| `type-document` | Libellé du bandeau corail, « Rapport d'étude » par défaut |
+| `img-couverture` | Photo de couverture, recadrée à 17,6 x 22,4 cm |
+| `partenaires` | Liste de logos partenaires (clé commune avec le format revealjs) ; `logo-partenaire` accepte un chemin unique |
+| `toc`, `toc-depth` | Affichage et profondeur du sommaire (`true` et 3 par défaut) |
+
+Le rendu des éléments suit les règles ci-dessous.
+
+- Titres : numérotés en indigo, le niveau 1 en capitales, et jamais isolés en bas de page.
+- Tableaux Markdown : en-tête indigo à texte blanc, filets gris horizontaux, une ligne sur deux teintée, sans filet vertical. Les légendes, de la forme « Tableau n°1 : », se placent au-dessus des tableaux.
+- Images : réduites pour tenir dans la largeur et sous 19 cm de haut.
+- Encadrés Quarto (callouts) : filet gauche, fond pâle et pastille de la couleur du type, soit l'indigo pour `note`, le vert pour `tip`, le jaune foncé pour `warning`, le corail pour `important` et le corail foncé pour `caution`. Les encadrés référencés (`#nte-...`) affichent « Note 1 : » suivi de leur titre.
+
+Les fonctions Typst `tableau_cerema`, `tableau_simple`, `tableau_cerema_color` et `tableau_scientifique` sont disponibles dans un bloc ` ```{=typst} `. Elles conservent leur propre style.
+
+La police est Arial, remplacée par Liberation Sans (mêmes métriques) lorsqu'Arial est absente, notamment sous Linux.
+
+Le format présente trois limites.
+
+- Quarto 1.7 télécharge le paquet Typst `@preview/fontawesome` dès qu'un document contient un encadré : sans connexion, la compilation échoue.
+- Le type d'encadré est reconnu par sa couleur par défaut. Une palette `brand` modifiée le rend méconnaissable, et l'encadré prend alors la couleur indigo de la note.
+- Les images de la charte sont appelées par le chemin absolu Typst `/_extensions/cerema/fig/cerema/`, résolu depuis la racine du projet Quarto. Le document doit donc se trouver dans le projet qui contient `_extensions/`.
+
 ## Accessibilité
 
 Le modèle comporte des paires de couleurs à faible contraste, qu'il convient de connaître.
@@ -122,21 +170,27 @@ Par ailleurs, l'extension met en noir le texte des en-têtes de tableau, ce qui 
 - `cerema-after-body.html` contient un script exécuté à l'initialisation de reveal.js. Il ajoute aux diapositives de contenu la classe `cerema-contenu` (barre, hachures, halo) et le pied de page. Sont exclues la couverture et les diapositives portant `.chapitre`, `.chapitre-sommaire`, `.fin` ou `.sans-pied`.
 - `cerema-header.html` déclare les `@font-face` de Marianne, applique l'image du halo et charge Spectral depuis Google Fonts. Les chemins y sont relatifs au document, car Quarto copie les fichiers déclarés dans `format-resources` à côté du HTML rendu.
 - `cerema.scss` rassemble les jetons de couleur, l'échelle typographique et les règles de chaque disposition.
+- `typst-template.typ` définit la fonction `cerema-rapport()`, les couleurs, les fonctions de tableau et remplace la fonction `callout()` de Quarto ; `typst-show.typ` transmet les métadonnées YAML à `cerema-rapport()`.
+- Pour un encadré référencé, une règle `show figure` du gabarit affiche directement le corps de la figure et transmet le préfixe « Note 1 » par un `state` Typst, au lieu de laisser Quarto démonter les blocs de l'encadré.
 
 ## Arborescence
 
 ```text
 .
 ├── _extensions/cerema/
-│   ├── _extension.yml          définition du format cerema-revealjs
+│   ├── _extension.yml          définition des formats cerema-revealjs et cerema-typst
 │   ├── cerema.lua              filtre Lua (fonds)
 │   ├── cerema.scss             thème
 │   ├── title-slide.html        partial de couverture
 │   ├── cerema-header.html      polices et halo
 │   ├── cerema-after-body.html  habillage et pied de page
+│   ├── typst-template.typ      gabarit du rapport (Typst)
+│   ├── typst-show.typ          passage des métadonnées au gabarit
 │   ├── assets/                 logos, bloc-marque RF, halo, motifs
-│   └── fonts/                  Marianne (graisses 300 à 800)
+│   ├── fonts/                  Marianne (graisses 300 à 800)
+│   └── fig/cerema/             images du rapport (couverture, logos, page de fin)
 ├── template.qmd                exemple complet
+├── rapport.qmd                 exemple de rapport (deux formats)
 ├── cerema_altair.py            thème Altair
 ├── pyproject.toml              dépendances Python
 └── uv.lock

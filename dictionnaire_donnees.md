@@ -70,6 +70,32 @@
 | `date` | date ou `today` | Pavé corail en bas à droite, format « MMMM YYYY » |
 | `partenaires` | liste de chemins | Logos partenaires en bas de couverture |
 
+## Métadonnées YAML propres au format `cerema-typst`
+
+| Clé | Type | Rôle |
+|---|---|---|
+| `shorttitle` | texte | Titre du pied de page (défaut : `title`) |
+| `abstract` | texte | Page « Résumé de l'étude » |
+| `type-document` | texte | Libellé du bandeau corail (défaut : « Rapport d'étude ») |
+| `img-couverture` | chemin | Photo de couverture, recadrée à 17,6 x 22,4 cm |
+| `logo-partenaire` | chemin | Logo partenaire unique (ignoré si `partenaires` est renseigné) |
+| `toc` | booléen | Page Sommaire (défaut : `true`) |
+| `toc-depth` | entier | Niveaux de titres du sommaire (défaut : 3) |
+
+## Objets Typst (`typst-template.typ`)
+
+| Nom | Type | Rôle |
+|---|---|---|
+| `bleucerema` … `bleumerlittoral` | couleur | Palette du rapport (`bleucerema` #292574, `orangecerema` #EF7757, `gris` #87888A, `jaunebatiment` #F7D05C, `vertinfratransport` #96AB5B, `vertenvrisque` #448D60, `bleumerlittoral` #5A71B4) |
+| `police` | liste | `("Arial", "Liberation Sans")` |
+| `dossier-fig` | texte | `/_extensions/cerema/fig/cerema/`, chemin absolu Typst depuis la racine du projet |
+| `chemin(p)` | fonction | Retire les échappements Pandoc (`\_`) d'un chemin de métadonnée |
+| `styles-callout` | dictionnaire | Couleur Quarto de l'encadré (hex) vers `(couleur, pictogramme)` Cerema |
+| `prefixe-callout` | state | « Note 1 » transmis au titre d'un encadré référencé |
+| `footer-style` | state | `"default"` (titre + pagination) ou `"simple"` (pagination seule) |
+| `cerema-rapport(...)` | fonction | Mise en page complète, appelée par `typst-show.typ` |
+| `tableau_cerema`, `tableau_simple`, `tableau_cerema_color`, `tableau_scientifique` | fonctions | Tableaux stylés à appeler depuis un bloc `{=typst}` |
+
 ## Ressources
 
 | Fichier | Origine | Rôle |
@@ -79,3 +105,6 @@
 | `assets/cerema-halo.png` | Design system Cerema, groupe Motifs | Halo de points corail |
 | `assets/cerema-hachures.svg`, `assets/cerema-trame.svg` | Design system Cerema, groupe Motifs | Fournis, non utilisés (motifs redessinés en CSS) |
 | `fonts/Marianne-*.otf` | Design system Cerema | Light, Regular, Italic, Medium, Bold, BoldItalic, ExtraBold |
+| `fig/cerema/marianne.png`, `fig/cerema/cerema.png` | Fournis par l'utilisateur | Logos de couverture du rapport Typst |
+| `fig/cerema/fond.jpg` | Fourni par l'utilisateur | Photo de couverture par défaut (« photo à remplacer ») |
+| `fig/cerema/fin_rapport.jpg` | Fourni par l'utilisateur | Bloc-marque de la page de fin du rapport |
