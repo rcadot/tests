@@ -188,4 +188,4 @@ Titre en `bleu`, texte courant en `noir`.
 - Nos formations certifiées : [cerema.fr/formation](https://cerema.fr/formation)
 - Notre offre aux collectivités territoriales : rejoignez-nous ! [cerema.fr/collectivites-territoriales](https://cerema.fr/collectivites-territoriales)
 - Nous contacter : [cerema.fr/contact](https://cerema.fr/contact)
-- LinkedIn et YouTube : @cerema
+- LinkedIn et YouTube : \@cerema
