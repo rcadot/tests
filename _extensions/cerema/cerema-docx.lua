@@ -18,10 +18,30 @@ local titres = {
   caution = "Mise en garde",
 }
 
+-- Texte des cellules d'en-tête : style de caractère « Tableau entête » (blanc
+-- gras). La couleur de la première ligne définie dans le style de tableau est
+-- ignorée par LibreOffice ; posée sur le texte, elle s'applique partout.
+local function entete_en_blanc(cellule)
+  cellule.contents = cellule.contents:walk({
+    Plain = function(bloc)
+      return pandoc.Plain({ pandoc.Span(bloc.content, { ["custom-style"] = "Tableau entête" }) })
+    end,
+    Para = function(bloc)
+      return pandoc.Para({ pandoc.Span(bloc.content, { ["custom-style"] = "Tableau entête" }) })
+    end,
+  })
+  return cellule
+end
+
 function Table(tableau)
   if tableau.attr.attributes["custom-style"] == nil then
     -- Identifiant du style Word (sans espace), et non son nom affiché.
     tableau.attr.attributes["custom-style"] = "TableauCerema"
+    for _, ligne in ipairs(tableau.head.rows) do
+      for _, cellule in ipairs(ligne.cells) do
+        entete_en_blanc(cellule)
+      end
+    end
   end
   return tableau
 end

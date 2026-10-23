@@ -287,6 +287,12 @@ def style_tableau(document: Document) -> None:
     fond(paire, LIGNE_TEINTEE_HEX)
     element.append(paire)
 
+    # Texte de l'en-tête, posé sur les cellules par cerema-docx.lua : la couleur
+    # de la première ligne du style de tableau est ignorée par LibreOffice.
+    caractere = document.styles.add_style("Tableau entête", WD_STYLE_TYPE.CHARACTER)
+    caractere.font.bold = True
+    caractere.font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
+
     entete = OxmlElement("w:tblStylePr")
     entete.set(qn("w:type"), "firstRow")
     rpr = OxmlElement("w:rPr")
