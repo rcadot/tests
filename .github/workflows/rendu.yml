@@ -1,5 +1,5 @@
 # Rendu des cinq formats de l'extension Cerema sur les deux documents d'exemple.
-# Échoue si un rendu échoue ou si les jetons générés ne sont plus à jour.
+# Échoue si un rendu échoue ou si les fichiers générés ne sont plus à jour.
 name: Rendu des formats Cerema
 
 on:
@@ -21,9 +21,10 @@ jobs:
       - name: Dépendances Python
         run: uv sync
 
-      - name: Jetons à jour
+      - name: Fichiers générés à jour
         run: |
-          uv run python outils/generer_jetons.py
+          uv run python _extensions/cerema/outils/generer_jetons.py
+          uv run python _extensions/cerema/outils/generer_ressources_web.py
           git diff --exit-code -- _extensions/cerema
 
       - name: Rendu des formats

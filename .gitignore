@@ -1,16 +1,12 @@
 .venv/
 __pycache__/
+.ruff_cache/
 .quarto/
 *_files/
-template.html
-# Ressources copiées par Quarto à côté du document rendu
-/Marianne-*.otf
-/cerema-*.svg
-/cerema-*.png
-rapport.html
-rapport.pdf
-template.pdf
-rapport.docx
-rapport.pptx
-template.docx
-template.pptx
+_site/
+
+# Rendus des documents d'exemple
+/rapport.*
+/template.*
+!/rapport.qmd
+!/template.qmd

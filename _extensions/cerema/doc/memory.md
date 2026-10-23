@@ -105,3 +105,15 @@
 - `format-resources` copie toujours les fichiers à plat à côté du document : les URL relatives des en-têtes
   HTML (`Marianne-*.otf`, `cerema-rf.svg`…) restent valables, et `.gitignore` aussi.
 - Vérifié : dix rendus, site avec page en sous-dossier, diapositives revealjs (halo, logos, polices).
+
+## Version 1.3.0 (tout dans _extensions/cerema)
+- Racine du dépôt : README.md, rapport.qmd, template.qmd, pyproject.toml, uv.lock, .github/, .gitignore.
+- Déplacés (git mv) : outils/ -> _extensions/cerema/outils/, sources/ -> _extensions/cerema/outils/sources/,
+  cerema_altair.py -> _extensions/cerema/python/cerema_altair/__init__.py, CHANGELOG/dictionnaire/memory ->
+  _extensions/cerema/doc/.
+- cerema_altair : paquet hatchling (`[tool.hatch.build.targets.wheel] packages`), installé en mode éditable
+  par `uv sync` ; chemins internes par `Path(__file__).resolve().parents[2]` (= _extensions/cerema).
+- Plus de `format-resources` : `outils/generer_ressources_web.py` écrit `commun/cerema-ressources.scss`
+  (Marianne en WOFF2 et logos/halo en URI data:, ~590 Ko) ; logos en `<span class="cerema-img-…" role="img">`,
+  halo des diapositives en `background-image: $cerema-img-halo`. Dernier fichier de `theme:`.
+- Vérifié sur un clone vierge : uv sync, dix rendus, racine propre (aucune copie), revealjs, page et site.

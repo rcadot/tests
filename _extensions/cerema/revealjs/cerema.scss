@@ -96,9 +96,10 @@ $callout-border-width: 1px;
     pointer-events: none;
   }
 
-  // Halo de points dans l'angle haut droit (image posée par cerema-header.html)
+  // Halo de points dans l'angle haut droit (image : commun/cerema-ressources.scss)
   &::after {
     content: "";
+    background-image: $cerema-img-halo;
     position: absolute;
     left: 1115px;
     top: -96px;
@@ -168,7 +169,7 @@ $callout-border-width: 1px;
   box-sizing: border-box;
   pointer-events: none;
 
-  img {
+  img, [class*="cerema-img-"] {
     display: block;
     margin: 0;
     max-width: none;
@@ -196,7 +197,7 @@ $callout-border-width: 1px;
   overflow: hidden;
   font-family: $police-titre;
 
-  img {
+  img, [class*="cerema-img-"] {
     position: absolute;
     display: block;
     margin: 0;

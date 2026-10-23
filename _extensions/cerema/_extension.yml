@@ -1,12 +1,12 @@
 title: Cerema
 author: Romain Cadot
-version: 1.2.1
+version: 1.3.0
 # Typst 0.12 (Quarto 1.6) requis pour les titres « sticky » du format typst.
 quarto-required: ">=1.6.0"
 contributes:
   formats:
     revealjs:
-      theme: [default, revealjs/cerema.scss, commun/cerema-jetons.scss]
+      theme: [default, revealjs/cerema.scss, commun/cerema-jetons.scss, commun/cerema-ressources.scss]
       # Diapositive 16:9 ; 1 pt du modèle PowerPoint (960 x 540 pt) = 4/3 px.
       width: 1280
       height: 720
@@ -26,17 +26,6 @@ contributes:
         - revealjs/cerema-after-body.html
       filters:
         - revealjs/cerema.lua
-      format-resources:
-        - commun/images/cerema-logo.svg
-        - commun/images/cerema-rf.svg
-        - commun/images/cerema-halo.png
-        - commun/polices/Marianne-Light.otf
-        - commun/polices/Marianne-Regular.otf
-        - commun/polices/Marianne-RegularItalic.otf
-        - commun/polices/Marianne-Medium.otf
-        - commun/polices/Marianne-Bold.otf
-        - commun/polices/Marianne-BoldItalic.otf
-        - commun/polices/Marianne-ExtraBold.otf
     typst:
       template-partials:
         - typst/typst-template.typ
@@ -95,7 +84,7 @@ contributes:
         echo: false
         warning: false
     html:
-      theme: [cosmo, html/cerema-html.scss, commun/cerema-jetons.scss]
+      theme: [cosmo, html/cerema-html.scss, commun/cerema-jetons.scss, commun/cerema-ressources.scss]
       # Colonne de contenu élargie (800 px par défaut dans Quarto)
       grid:
         body-width: 1050px
@@ -107,16 +96,6 @@ contributes:
         - html/cerema-html-header.html
       include-before-body:
         - html/cerema-html-bandeau.html
-      format-resources:
-        - commun/images/cerema-logo.svg
-        - commun/images/cerema-rf.svg
-        - commun/polices/Marianne-Light.otf
-        - commun/polices/Marianne-Regular.otf
-        - commun/polices/Marianne-RegularItalic.otf
-        - commun/polices/Marianne-Medium.otf
-        - commun/polices/Marianne-Bold.otf
-        - commun/polices/Marianne-BoldItalic.otf
-        - commun/polices/Marianne-ExtraBold.otf
       crossref:
         tbl-title: "Tableau"
         fig-title: "Figure"

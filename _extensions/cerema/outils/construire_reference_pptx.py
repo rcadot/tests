@@ -15,8 +15,8 @@ retype leurs zones réservées. Les 33 autres dispositions restent disponibles
 dans PowerPoint pour une mise en forme manuelle.
 
 Usage :
-    uv run python outils/construire_reference_pptx.py \
-        sources/Modele_Diaporama_Cerema_2026.potx \
+    uv run python _extensions/cerema/outils/construire_reference_pptx.py \
+        _extensions/cerema/outils/sources/Modele_Diaporama_Cerema_2026.potx \
         _extensions/cerema/pptx/reference.pptx
 """
 
