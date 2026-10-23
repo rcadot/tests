@@ -213,7 +213,7 @@ Le thème est un thème Bootstrap, `cerema-html.scss`, fondé sur cosmo. Les pol
 - Tableaux : en-tête corail et lignes gris-tableau.
 - Encadrés : aux couleurs Cerema, soit l'indigo pour `note`, le vert pour `tip`, le jaune foncé pour `warning`, le corail pour `important` et le corail foncé pour `caution`.
 - Citations : Spectral italique indigo.
-- Barre de navigation : blanche, soulignée de corail. Le pied de page est indigo-profond.
+- Barre de navigation : blanche, soulignée de corail. Le pied de page est blanc, séparé du contenu par un filet gris clair, avec un texte indigo.
 
 Pour un site, il suffit de déclarer le format dans `_quarto.yml`.
 

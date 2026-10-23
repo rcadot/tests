@@ -42,8 +42,8 @@ $toc-color: $indigo;
 $navbar-bg: $blanc;
 $navbar-fg: $indigo;
 $navbar-hl: $corail;
-$footer-bg: $indigo-profond;
-$footer-fg: $blanc;
+$footer-bg: $blanc;
+$footer-fg: $indigo;
 
 // Encadrés : mêmes correspondances que les formats typst et docx
 $callout-color-note: $indigo;
@@ -154,7 +154,10 @@ div.callout {
 }
 
 // Pied de page des sites
+// Pied de page des sites : fond blanc, filet gris-clair, texte discret
 .nav-footer {
-  color: $blanc;
-  a { color: $blanc; }
+  border-top: 1px solid $gris-clair;
+  color: $indigo;
+  font-size: 0.85rem;
+  a { color: $indigo; }
 }
