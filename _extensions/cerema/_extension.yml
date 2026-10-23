@@ -1,0 +1,38 @@
+title: Cerema
+author: Romain Cadot
+version: 1.0.0
+quarto-required: ">=1.4.0"
+contributes:
+  formats:
+    revealjs:
+      theme: [default, cerema.scss]
+      # Diapositive 16:9 ; 1 pt du modèle PowerPoint (960 x 540 pt) = 4/3 px.
+      width: 1280
+      height: 720
+      margin: 0
+      center: false
+      transition: none
+      background-transition: none
+      slide-number: false
+      lang: fr
+      date-format: "MMMM YYYY"
+      fig-align: center
+      template-partials:
+        - title-slide.html
+      include-in-header:
+        - cerema-header.html
+      include-after-body:
+        - cerema-after-body.html
+      filters:
+        - cerema.lua
+      format-resources:
+        - assets/cerema-logo.svg
+        - assets/cerema-rf.svg
+        - assets/cerema-halo.png
+        - fonts/Marianne-Light.otf
+        - fonts/Marianne-Regular.otf
+        - fonts/Marianne-RegularItalic.otf
+        - fonts/Marianne-Medium.otf
+        - fonts/Marianne-Bold.otf
+        - fonts/Marianne-BoldItalic.otf
+        - fonts/Marianne-ExtraBold.otf

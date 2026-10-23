@@ -1,0 +1,29 @@
+<section id="$idprefix$title-slide"$for(title-slide-attributes/pairs)$ $it.key$="$it.value$"$endfor$ class="cerema-couverture">
+  <img class="cerema-couv-rf" src="cerema-rf.svg" alt="République française">
+  <img class="cerema-couv-logo" src="cerema-logo.svg" alt="Cerema, climat et territoires de demain">
+  <img class="cerema-couv-halo" src="cerema-halo.png" alt="">
+  <div class="cerema-couv-texte">
+    <h1 class="title">$title$</h1>
+$if(subtitle)$
+    <p class="subtitle">$subtitle$</p>
+$endif$
+$if(by-author)$
+    <div class="cerema-couv-auteurs">
+$for(by-author)$
+      <p class="author">$it.name.literal$$if(it.affiliations)$<span class="affiliation">$for(it.affiliations)$$it.name$$sep$, $endfor$</span>$endif$</p>
+$endfor$
+    </div>
+$endif$
+  </div>
+$if(partenaires)$
+  <div class="cerema-couv-partenaires">
+$for(partenaires)$
+    <img src="$it$" alt="">
+$endfor$
+  </div>
+$endif$
+$if(date)$
+  <div class="cerema-couv-bandes"></div>
+  <p class="date">$date$</p>
+$endif$
+</section>

@@ -1,0 +1,11 @@
+[project]
+name = "cerema-quarto-revealjs"
+version = "1.0.0"
+description = "Modèle de présentation Quarto revealjs au style Cerema"
+requires-python = ">=3.10"
+dependencies = [
+    "altair>=6.2.2",
+    "jupyter>=1.1.1",
+    "polars>=2.0.0",
+    "pyarrow>=25.0.1",
+]

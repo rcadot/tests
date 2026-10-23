@@ -1,0 +1,532 @@
+/*-- scss:defaults --*/
+
+// Jetons couleur du design system Cerema
+$indigo: #282474;
+$indigo-profond: #262069;
+$indigo-texte: #2F2B74;
+$corail: #EF7757;
+$corail-pale: #F6B5A4;
+$jaune: #F7D05C;
+$olive: #96AB5B;
+$vert: #448D60;
+$bleu: #5971B3;
+$fond-lavande: #E7E4EF;
+$fond-jaune: #FDF6DE;
+$fond-corail: #FCEAE5;
+$fond-olive: #ECF3DA;
+$fond-vert: #D6EBDE;
+$fond-bleu: #E4E8F2;
+$gris-clair: #E7E6E6;
+$gris-tableau: #F2F2F2;
+$blanc: #FFFFFF;
+$noir: #000000;
+
+// Familles
+$police-marianne: Marianne, Arial, sans-serif;
+$police-titre: Arial, "Helvetica Neue", sans-serif;
+$police-citation: Spectral, Georgia, serif;
+
+// Échelle : 1 pt du modèle (960 x 540 pt) = 4/3 px sur une diapositive de 1280 x 720 px
+$espace-1: 11px;
+$espace-2: 21px;
+$espace-3: 32px;
+$espace-4: 64px;
+
+// Variables Quarto / reveal.js
+$body-bg: $blanc;
+$body-color: $noir;
+$link-color: $indigo;
+$font-family-sans-serif: $police-marianne;
+$presentation-font-size-root: 24px;           // 18 pt
+$presentation-line-height: 1.35;
+$presentation-heading-font: $police-titre;
+$presentation-heading-color: $corail;
+$presentation-heading-font-weight: 700;
+$presentation-heading-line-height: 1.15;
+$presentation-heading-text-transform: none;
+$presentation-h1-font-size: 53px;             // display, 40 pt
+$presentation-h2-font-size: 37px;             // titre-diapo, 28 pt
+$presentation-h3-font-size: 27px;             // sous-titre, 20 pt
+$presentation-h4-font-size: 24px;
+$code-block-border-color: $gris-clair;
+$code-block-bg: $gris-tableau;
+$border-radius: 0;
+$code-color: $indigo;
+$callout-border-width: 1px;
+
+/*-- scss:rules --*/
+
+:root {
+  --cerema-indigo: #{$indigo};
+  --cerema-indigo-profond: #{$indigo-profond};
+  --cerema-indigo-texte: #{$indigo-texte};
+  --cerema-corail: #{$corail};
+  --cerema-corail-pale: #{$corail-pale};
+  --cerema-jaune: #{$jaune};
+  --cerema-olive: #{$olive};
+  --cerema-vert: #{$vert};
+  --cerema-bleu: #{$bleu};
+  --cerema-gris-tableau: #{$gris-tableau};
+}
+
+.reveal {
+  font-family: $police-marianne;
+  color: $noir;
+
+  // Aucun coin arrondi, aucune ombre dans le modèle
+  img, pre, code, table, .callout, .chapo {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  a { color: $indigo; text-decoration: underline; }
+
+  strong, b { font-weight: 700; }
+
+  ul > li::marker { color: $corail; }
+  ol > li::marker { color: $corail; font-weight: 700; }
+
+  .slides section {
+    text-align: left;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Diapositives de contenu : barre-repère, hachures, halo, pied de page
+// ---------------------------------------------------------------------------
+
+.reveal .slides section.cerema-contenu {
+  box-sizing: border-box;
+  height: 720px;
+  padding: 45px $espace-4 96px $espace-4;
+  overflow: hidden;
+
+  // Bloc hachuré derrière le début du titre (36-168 pt, 1-204 pt)
+  &::before {
+    content: "";
+    position: absolute;
+    left: 48px;
+    top: 1px;
+    width: 176px;
+    height: 271px;
+    background: repeating-linear-gradient(135deg, rgba(239, 119, 87, .39) 0 1.4px, transparent 1.4px 8px);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  // Halo de points dans l'angle haut droit (image posée par cerema-header.html)
+  &::after {
+    content: "";
+    position: absolute;
+    left: 1115px;
+    top: -96px;
+    width: 269px;
+    height: 265px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: .55;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  > h2 {
+    position: relative;
+    margin: 0 0 $espace-3 49px;   // titre à 85 pt du bord
+    padding-right: 220px;          // dégage le halo
+    font-size: 37px;
+    line-height: 38px;
+    text-transform: uppercase;
+    color: $corail;
+
+    // Barre-repère collée au bord gauche (0-65 pt)
+    &::before {
+      content: "";
+      position: absolute;
+      left: -113px;
+      top: 0;
+      width: 87px;
+      height: 38px;
+      background: $corail;
+    }
+  }
+
+  h3 {
+    font-family: $police-marianne;
+    font-size: 27px;
+    font-weight: 700;
+    color: $indigo;
+    text-transform: none;
+    margin: 0 0 $espace-1 0;
+  }
+}
+
+// Fonds teintés : la couleur du titre et de la barre suit le fond
+@mixin fond-teinte($titre) {
+  > h2 { color: $titre; }
+  > h2::before { background: $titre; }
+}
+.reveal .slides section.fond-lavande { @include fond-teinte($indigo-texte); }
+.reveal .slides section.fond-jaune   { @include fond-teinte($indigo-texte); }
+.reveal .slides section.fond-corail  { @include fond-teinte($corail); }
+.reveal .slides section.fond-olive   { @include fond-teinte($olive); }
+.reveal .slides section.fond-vert    { @include fond-teinte($vert); }
+.reveal .slides section.fond-bleu    { @include fond-teinte($bleu); }
+
+// Pied de page : bloc-marque RF, logo Cerema, numéro sur le même axe
+.reveal .cerema-pied {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 84px;
+  display: flex;
+  align-items: center;
+  gap: 19px;
+  padding: 0 53px 0 37px;
+  box-sizing: border-box;
+  pointer-events: none;
+
+  img {
+    display: block;
+    margin: 0;
+    max-width: none;
+    max-height: none;
+  }
+  .cerema-pied-rf { width: 68px; height: 61px; }
+  .cerema-pied-logo { width: 160px; height: 47px; }
+  .cerema-pied-num {
+    margin-left: auto;
+    font-family: $police-titre;
+    font-size: 13px;
+    line-height: 1;
+    color: $noir;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Couverture
+// ---------------------------------------------------------------------------
+
+.reveal .slides section#title-slide {
+  box-sizing: border-box;
+  height: 720px;
+  padding: 0;
+  overflow: hidden;
+  font-family: $police-titre;
+
+  img {
+    position: absolute;
+    display: block;
+    margin: 0;
+    max-width: none;
+    max-height: none;
+  }
+  .cerema-couv-rf { left: 45px; top: 31px; width: 139px; }
+  .cerema-couv-logo { left: 880px; top: 45px; width: 324px; }
+  .cerema-couv-halo { left: -24px; top: 176px; width: 269px; height: 265px; opacity: .55; }
+
+  .cerema-couv-texte {
+    position: absolute;
+    left: 155px;
+    top: 247px;
+    width: 1000px;
+  }
+
+  h1.title {
+    display: inline-block;
+    margin: 0;
+    font-family: $police-titre;
+    font-weight: 700;
+    font-size: 43px;
+    line-height: 53px;
+    text-transform: uppercase;
+    color: $corail;
+    background: linear-gradient(90deg, $corail, $indigo-profond);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .subtitle {
+    margin: $espace-2 0 0 0;
+    font-family: $police-titre;
+    font-size: 34px;
+    line-height: 43px;
+    text-transform: uppercase;
+    color: $indigo-profond;
+  }
+
+  .cerema-couv-auteurs {
+    margin-top: $espace-3;
+    .author {
+      margin: 0 0 4px 0;
+      font-family: $police-marianne;
+      font-size: 21px;
+      line-height: 28px;
+      font-weight: 700;
+      color: $indigo;
+    }
+    .affiliation {
+      font-weight: 400;
+      &::before { content: " · "; }
+    }
+  }
+
+  .cerema-couv-partenaires {
+    position: absolute;
+    left: 155px;
+    bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: $espace-3;
+    img { position: static; height: 56px; width: auto; }
+  }
+
+  .cerema-couv-bandes {
+    position: absolute;
+    left: 931px;
+    top: 629px;
+    width: 299px;
+    height: 48px;
+    background: repeating-linear-gradient(135deg, rgba(239, 119, 87, .55) 0 2.7px, transparent 2.7px 9px);
+  }
+
+  .date {
+    position: absolute;
+    left: 973px;
+    top: 637px;
+    width: 213px;
+    height: 32px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $corail;
+    font-family: $police-marianne;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1;
+    color: $blanc;
+    text-transform: capitalize;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Chapitres
+// ---------------------------------------------------------------------------
+
+.reveal .slides section.chapitre {
+  box-sizing: border-box;
+  height: 720px;
+  padding: 0 $espace-4;
+
+  > h1, > h2 {
+    position: absolute;
+    left: $espace-4;
+    right: $espace-4;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0;
+    font-family: $police-titre;
+    font-size: 53px;
+    line-height: 64px;
+    font-weight: 700;
+    text-transform: none;
+    color: $blanc;
+  }
+}
+
+.reveal .slides section.chapitre-sommaire {
+  box-sizing: border-box;
+  height: 720px;
+  padding: 0 $espace-4 0 704px;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+
+  > h1, > h2 {
+    position: absolute;
+    left: $espace-4;
+    width: 512px;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0;
+    font-family: $police-titre;
+    font-size: 53px;
+    line-height: 64px;
+    font-weight: 700;
+    text-transform: none;
+    color: $blanc;
+  }
+
+  ul, ol {
+    margin: 0;
+    color: $indigo;
+    font-size: 21px;
+    line-height: 30px;
+  }
+  li { margin-bottom: $espace-1; }
+}
+
+// ---------------------------------------------------------------------------
+// Page de fin
+// ---------------------------------------------------------------------------
+
+.reveal .slides section.fin {
+  box-sizing: border-box;
+  height: 720px;
+  padding: 72px $espace-4 0 $espace-4;
+  color: $blanc;
+
+  > h2 {
+    margin: 0 0 $espace-3 0;
+    font-family: $police-titre;
+    font-size: 53px;
+    line-height: 64px;
+    text-transform: none;
+    color: $blanc;
+  }
+  a { color: $blanc; font-weight: 700; }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 21px;
+    line-height: 28px;
+  }
+  li { margin-bottom: $espace-2; }
+  li::marker { content: none; }
+}
+
+// ---------------------------------------------------------------------------
+// Composants
+// ---------------------------------------------------------------------------
+
+// Chapô : cadre filet indigo 1 px, texte indigo
+.reveal .chapo {
+  border: 1px solid $indigo;
+  padding: $espace-2;
+  color: $indigo;
+  font-size: 19px;
+  line-height: 27px;
+
+  > p:first-child > strong:first-child {
+    display: block;
+    font-size: 21px;
+  }
+  p { margin: 0 0 $espace-1 0; }
+  p:last-child { margin-bottom: 0; }
+}
+
+// Verbatim : Spectral italique indigo, attribution dessous
+.reveal .verbatim {
+  color: $indigo;
+
+  blockquote, > p:first-child {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    width: auto;
+    max-width: 800px;
+    box-shadow: none;
+    font-family: $police-citation;
+    font-style: italic;
+    font-size: 27px;
+    line-height: 37px;
+    color: $indigo;
+  }
+  blockquote p { margin: 0; }
+
+  .attribution {
+    margin-top: $espace-2;
+    font-family: $police-marianne;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 21px;
+    strong { font-size: 19px; }
+  }
+}
+
+// Tableau : en-tête corail, lignes gris-tableau, première colonne indigo
+.reveal table {
+  border-collapse: separate;
+  border-spacing: 3px;
+  font-size: 19px;
+  line-height: 27px;
+
+  th, td {
+    border: 0 !important;
+    padding: 8px $espace-2;
+  }
+  thead th {
+    background: $corail;
+    color: $noir;              // 7,4:1 ; le modèle pose du blanc (2,82:1)
+    font-weight: 700;
+    text-align: center;
+  }
+  tbody td {
+    background: $gris-tableau;
+  }
+  tbody td:first-child {
+    color: $indigo;
+  }
+  caption {
+    font-size: 16px;
+    color: $indigo;
+  }
+}
+.reveal table.entete-blanc thead th,
+.reveal .entete-blanc table thead th {
+  color: $blanc;
+}
+
+// Mentions et sources
+.reveal .mention,
+.reveal .source {
+  font-size: 16px;
+  line-height: 21px;
+  color: $noir;
+}
+
+// Sommaire / ordre du jour
+.reveal .sommaire ol {
+  font-size: 27px;
+  line-height: 37px;
+  li { margin-bottom: $espace-2; }
+}
+
+// Encadré de mise en avant corail pâle
+.reveal .encadre {
+  background: $corail-pale;
+  padding: $espace-2;
+}
+
+// Légendes de figures
+.reveal .figure figcaption,
+.reveal figcaption {
+  font-size: 16px;
+  color: $indigo;
+}
+
+// Colonnes : gouttière répartie entre les colonnes
+.reveal .columns {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+// Couverture alignée à gauche (Quarto centre le titre par défaut)
+.reveal .slides section#title-slide,
+.reveal .slides section#title-slide * {
+  text-align: left;
+}
+
+// Bouton du menu déplacé à droite pour dégager les logos du pied de page
+.reveal .slide-menu-button {
+  left: auto !important;
+  right: 10px;
+}
+.reveal .cerema-pied .cerema-pied-num {
+  margin-right: 24px;
+}

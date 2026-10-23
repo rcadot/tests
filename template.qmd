@@ -1,0 +1,191 @@
+---
+title: "Titre de la présentation"
+subtitle: "Sous-titre de la présentation"
+author:
+  - name: Prénom Nom
+    affiliations:
+      - name: Cerema
+date: today
+# partenaires:            # logos partenaires affichés en bas de couverture
+#   - images/partenaire-1.png
+format:
+  cerema-revealjs: default
+execute:
+  echo: false
+  warning: false
+---
+
+## Sommaire / ordre du jour {.sommaire}
+
+1. Introduction
+2. Méthode
+3. Résultats
+4. Perspectives
+
+# Introduction
+
+## Titre - diapo avec texte uniquement
+
+Le Cerema accompagne l'État et les collectivités dans l'élaboration, le déploiement et l'évaluation de politiques publiques d'aménagement et de transport.
+
+- Premier point de contenu
+- Deuxième point de contenu
+  - Sous-point
+- Troisième point de contenu
+
+::: {.source}
+Source : Cerema, 2026.
+:::
+
+## Chapô et contenu
+
+:::: {.columns}
+
+::: {.column width="38%"}
+::: {.chapo}
+**Chapô**
+
+Message clé de la diapositive, en quelques lignes, soixante mots au plus.
+:::
+:::
+
+::: {.column width="58%"}
+**Contenu**
+
+Texte courant en Marianne, couleur noire, aligné à gauche. Le chapô résume le propos, cette colonne le développe.
+:::
+
+::::
+
+## Contenu en plusieurs colonnes
+
+:::: {.columns}
+
+::: {.column width="31%"}
+### Sous-titre 1
+
+Premier bloc de texte.
+:::
+
+::: {.column width="31%"}
+### Sous-titre 2
+
+Deuxième bloc de texte.
+:::
+
+::: {.column width="31%"}
+### Sous-titre 3
+
+Troisième bloc de texte.
+:::
+
+::::
+
+## Verbatim
+
+::: {.verbatim}
+> Et quoniam inedia gravi afflictabantur, locum petivere Paleas nomine, vergentem in mare.
+
+::: {.attribution}
+**PRÉNOM NOM**\
+Fonction\
+Organisme
+:::
+:::
+
+# Résultats
+
+## Texte et tableau
+
+:::: {.columns}
+
+::: {.column width="35%"}
+Les en-têtes sont en `corail`, les lignes en `gris-tableau`, les libellés de la première colonne en `indigo`.
+:::
+
+::: {.column width="60%"}
+|         | Colonne 1 | Colonne 2 | Colonne 3 |
+|---------|----------:|----------:|----------:|
+| Ligne 1 |        12 |        34 |        56 |
+| Ligne 2 |         7 |         8 |         9 |
+| Ligne 3 |        10 |        11 |        12 |
+:::
+
+::::
+
+## Texte et graphique
+
+:::: {.columns}
+
+::: {.column width="35%"}
+Barres en `indigo-profond`, puis séries en `corail`, `jaune`, `olive`, `vert` et `bleu`.
+
+::: {.mention}
+Graphique Altair avec le thème `cerema` (voir `cerema_altair.py`).
+:::
+:::
+
+::: {.column width="60%"}
+```{python}
+import altair as alt
+import polars as pl
+
+import cerema_altair  # noqa: F401  (enregistre et active le thème)
+
+df = pl.DataFrame(
+    {
+        "annee": ["2021", "2022", "2023", "2024", "2025"],
+        "valeur": [12, 18, 15, 22, 27],
+    }
+)
+alt.Chart(df).mark_bar().encode(
+    x=alt.X("annee:N", title=None),
+    y=alt.Y("valeur:Q", title="Hectares"),
+).properties(width=620, height=340)
+```
+:::
+
+::::
+
+# Fonds teintés {.chapitre-sommaire}
+
+- Fond lavande
+- Fond jaune
+- Fond corail
+- Fond olive
+- Fond vert
+- Fond bleu
+
+## Fond lavande {.fond-lavande}
+
+Titre en `indigo-texte`, texte courant en `noir`.
+
+## Fond jaune {.fond-jaune}
+
+Titre en `indigo-texte`, texte courant en `noir`.
+
+## Fond corail {.fond-corail}
+
+Titre en `corail`, texte courant en `noir`.
+
+## Fond olive {.fond-olive}
+
+Titre en `olive`, texte courant en `noir`.
+
+## Fond vert {.fond-vert}
+
+Titre en `vert`, texte courant en `noir`.
+
+## Fond bleu {.fond-bleu}
+
+Titre en `bleu`, texte courant en `noir`.
+
+## Merci pour votre attention {.fin}
+
+- Toutes nos actualités, solutions, activités et services : [cerema.fr](https://cerema.fr)
+- Nos ressources documentaires : [doc.cerema.fr](https://doc.cerema.fr)
+- Nos événements, conférences et webinaires : [cerema.fr/evenements](https://cerema.fr/evenements)
+- Nos formations certifiées : [cerema.fr/formation](https://cerema.fr/formation)
+- Notre offre aux collectivités territoriales : rejoignez-nous ! [cerema.fr/collectivites-territoriales](https://cerema.fr/collectivites-territoriales)
+- Nous contacter : [cerema.fr/contact](https://cerema.fr/contact)
+- LinkedIn et YouTube : @cerema

@@ -1,0 +1,38 @@
+<script>
+// Habillage Cerema : sur chaque diapositive de contenu, ajoute la classe
+// cerema-contenu (barre, hachures, halo) et le pied de page avec les deux
+// logos et le numéro de page. Couverture, chapitres et page de fin en sont
+// exclus, comme dans le modèle.
+(function () {
+  var EXCLUS = ["chapitre", "chapitre-sommaire", "fin", "sans-pied"];
+
+  function estContenu(section) {
+    if (section.id === "title-slide") return false;
+    for (var i = 0; i < EXCLUS.length; i++) {
+      if (section.classList.contains(EXCLUS[i])) return false;
+    }
+    return true;
+  }
+
+  function habiller() {
+    var slides = Reveal.getSlides();
+    slides.forEach(function (section, i) {
+      if (!estContenu(section) || section.querySelector(".cerema-pied")) return;
+      section.classList.add("cerema-contenu");
+      var pied = document.createElement("div");
+      pied.className = "cerema-pied";
+      pied.innerHTML =
+        '<img class="cerema-pied-rf" src="cerema-rf.svg" alt="République française">' +
+        '<img class="cerema-pied-logo" src="cerema-logo.svg" alt="Cerema">' +
+        '<span class="cerema-pied-num">' + (i + 1) + "</span>";
+      section.appendChild(pied);
+    });
+  }
+
+  if (window.Reveal && Reveal.isReady && Reveal.isReady()) {
+    habiller();
+  } else if (window.Reveal) {
+    Reveal.on("ready", habiller);
+  }
+})();
+</script>

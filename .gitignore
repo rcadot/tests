@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+.quarto/
+*_files/
+template.html
+# Ressources copiées par Quarto à côté du document rendu
+/Marianne-*.otf
+/cerema-*.svg
+/cerema-*.png
