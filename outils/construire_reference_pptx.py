@@ -289,10 +289,21 @@ def vers_comparison(layout: SlideLayout) -> None:
 
 
 def vers_content_with_caption(layout: SlideLayout) -> None:
-    """« Page avec 1 photo + texte » : image à gauche (12), texte à droite (11)."""
+    """« Page avec 1 photo + texte » : texte en haut (11), objet dessous (12).
+
+    Pandoc emploie cette disposition pour un texte suivi d'une image ou d'un
+    tableau. La photo étroite du modèle (un tiers de la largeur) écrasait les
+    tableaux : texte et objet prennent ici toute la largeur, l'un sous l'autre.
+    """
     titre_diapositive(layout)
-    retyper(zone(layout, 12), None, 1)
-    retyper(zone(layout, 11), "body", 2, "half")
+    hauteur_texte = 1100000
+    objet = zone(layout, 12)
+    texte = zone(layout, 11)
+    retyper(objet, None, 1)
+    retyper(texte, "body", 2, "half")
+    placer(texte, GAUCHE, HAUT_CONTENU, LARGEUR_UTILE, hauteur_texte)
+    haut_objet = HAUT_CONTENU + hauteur_texte + 100000
+    placer(objet, GAUCHE, haut_objet, LARGEUR_UTILE, BAS_CONTENU - haut_objet)
 
 
 def vers_blank(layout: SlideLayout) -> None:

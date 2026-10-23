@@ -71,3 +71,27 @@
 - Pages HTML isolées : même règle que les sites, logos dans le pied de page (créé si absent, classe
   `cerema-pied-cree`). Le bandeau du haut n'est masqué que sous la classe `cerema-js`, posée par le script :
   sans JavaScript, les logos restent en tête.
+
+## Version 1.2.0 (harmonisation)
+- Choix utilisateur : tableaux au modèle bleu de l'ancien rendu Typst partout (en-tête indigo, texte blanc
+  gras, filets gris, une ligne sur deux teintée indigo 94 %, sans filet vertical) ; pas d'orange sur les
+  titres (Word et HTML) ; titres du Word comme le PDF. Le design system prescrit un en-tête corail : écart
+  assumé à la demande de l'utilisateur.
+- Bug corrigé : `color.theme_color = None` après `color.rgb` supprimait la couleur (python-docx) ; titres
+  du Word noirs jusqu'en 1.1.0.
+- Jetons : `sources/tokens.json` -> `outils/generer_jetons.py` -> `cerema-jetons.scss` (dernier dans
+  `theme:`, Quarto inverse l'ordre des defaults), `jetons.json`, bloc `// <jetons>` du gabarit Typst.
+- PDF : `font-paths: fonts` (Quarto le réécrit en `_extensions/cerema/fonts`) ; texte Marianne, titres
+  ("Arial", "Marianne") : avertissement « unknown font family: arial » attendu sous Linux uniquement.
+  Une liste de polices avertit pour chaque police absente, même si la suivante existe.
+- docx : encadrés non numérotés -> Div `custom-style` « Encadré <type> » / « Encadré <type> titre » /
+  « Encadré fin » (cerema-docx.lua, handler `Callout` ; contenu et titre peuvent arriver en bloc ;
+  identifiant dans `attr.identifier`). Encadrés numérotés laissés à Quarto.
+- pptx : `cerema-pptx.lua` en deux passes (numérotation puis conversion des FloatRefTarget « Table » et des
+  Cite `@tbl-`), car Quarto supprime les tableaux numérotés en pptx. « Content with Caption » réorganisée :
+  texte en haut, objet dessous, pleine largeur.
+- HTML : `grid: body-width: 1050px` dans `_extension.yml`.
+- CI : `.github/workflows/rendu.yml` (checkout@v7, quarto-actions/setup@v2 avec 1.7.32, setup-uv@v7,
+  upload-artifact@v7 ; tags vérifiés par git ls-remote).
+- Non fait : choix d'une disposition PowerPoint par classe (`.fin`…) : Pandoc ne le permet pas, il faudrait
+  un post-traitement python-pptx après rendu. Encadrés hors ligne (fontawesome) non résolu.

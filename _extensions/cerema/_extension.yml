@@ -1,12 +1,12 @@
 title: Cerema
 author: Romain Cadot
-version: 1.1.0
+version: 1.2.0
 # Typst 0.12 (Quarto 1.6) requis pour les titres « sticky » du format typst.
 quarto-required: ">=1.6.0"
 contributes:
   formats:
     revealjs:
-      theme: [default, cerema.scss]
+      theme: [default, cerema.scss, cerema-jetons.scss]
       # Diapositive 16:9 ; 1 pt du modèle PowerPoint (960 x 540 pt) = 4/3 px.
       width: 1280
       height: 720
@@ -44,6 +44,7 @@ contributes:
       papersize: a4
       lang: fr
       region: FR
+      font-paths: fonts
       # Le sommaire stylisé est produit par le gabarit ; toc: false le retire.
       toc: true
       toc-depth: 3
@@ -60,9 +61,16 @@ contributes:
       # Construit depuis sources/Modele_Diaporama_Cerema_2026.potx par
       # outils/construire_reference_pptx.py (dispositions renommées pour Pandoc).
       reference-doc: reference.pptx
+      filters:
+        - cerema-pptx.lua
       lang: fr
       date-format: "MMMM YYYY"
       slide-level: 2
+      crossref:
+        tbl-title: "Tableau"
+        fig-title: "Figure"
+        tbl-prefix: "Tableau"
+        fig-prefix: "Figure"
       execute:
         echo: false
         warning: false
@@ -87,7 +95,10 @@ contributes:
         echo: false
         warning: false
     html:
-      theme: [cosmo, cerema-html.scss]
+      theme: [cosmo, cerema-html.scss, cerema-jetons.scss]
+      # Colonne de contenu élargie (800 px par défaut dans Quarto)
+      grid:
+        body-width: 1050px
       lang: fr
       date-format: "MMMM YYYY"
       toc: true

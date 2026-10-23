@@ -126,13 +126,18 @@
 | Style | Rendu |
 |---|---|
 | Normal, Body Text, First Paragraph, Compact | Marianne 11 pt noir |
-| Title | Arial gras 26 pt `indigo-profond`, filet `corail` dessous |
+| Title | Arial gras 26 pt `indigo` |
 | Subtitle | Marianne 16 pt `indigo` |
-| Heading 1 | Arial gras 18 pt `indigo`, capitales, filet `corail` à gauche |
-| Heading 2, Heading 3 | Arial gras 14 et 12 pt `indigo` |
+| Heading 1 | Arial gras 19 pt `indigo`, capitales |
+| Heading 2, Heading 3 | Arial gras 16 et 12 pt `indigo` |
+| Heading 4 | Arial italique 11 pt `corail` |
+| Heading 5 à 9 | Arial italique 11 pt gris #87888A |
 | Block Text | Marianne italique 12 pt `indigo`, filet `indigo` à gauche |
 | Caption, Table Caption, Image Caption | Marianne italique 9 pt noir |
-| Tableau Cerema (`TableauCerema`) | En-tête `corail`, texte noir gras ; lignes `gris-tableau` ; filets blancs ; 9 pt |
+| Tableau Cerema (`TableauCerema`) | En-tête `indigo`, texte blanc gras ; filets horizontaux #B7B8B9 ; ligne paire #F2F2F7 ; 9 pt |
+| Encadré `<type>` (note, tip, warning, important, caution) | Marianne 10,5 pt ; filet gauche 3 pt de la couleur du type ; fond éclairci à 92 % |
+| Encadré `<type>` titre | Idem, gras, couleur du type |
+| Encadré fin | Espace de 4 pt sous l'encadré |
 | Table | Style neutre de Pandoc, laissé aux tableaux de mise en page de Quarto |
 
 ## Graphiques (`cerema_altair.py`)
@@ -142,3 +147,22 @@
 | `rendu_html_et_png` | fonction | Moteur de rendu « cerema » : paquet MIME `text/html` + `image/png` |
 | `ECHELLE_PNG` | float | Facteur d'échelle des PNG (2) |
 | `DOSSIER_POLICES` | Path | `_extensions/cerema/fonts`, enregistré auprès de vl-convert |
+
+## Jetons couleur générés (`outils/generer_jetons.py`)
+
+| Fichier | Contenu | Lu par |
+|---|---|---|
+| `sources/tokens.json` | Copie du `tokens.json` du design system (source unique) | `outils/generer_jetons.py` |
+| `_extensions/cerema/cerema-jetons.scss` | Variables `$indigo`, `$corail`… | Thèmes revealjs et html (dernier fichier de `theme:`) |
+| `_extensions/cerema/jetons.json` | Nom -> couleur hexadécimale | `cerema_altair.py`, `outils/construire_reference_docx.py` |
+| `typst-template.typ`, bloc `// <jetons>` | `#let indigo = rgb("#282474")`… | Gabarit Typst (alias `bleucerema`, `orangecerema`… conservés) |
+
+## Couleurs des encadrés (tous formats)
+
+| Type | Couleur |
+|---|---|
+| note | `indigo` |
+| tip | `vert` |
+| warning | `jaune` assombri de 25 % |
+| important | `corail` |
+| caution | `corail` assombri (25 % en Typst et Word, 15 % en HTML) |

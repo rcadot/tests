@@ -1,0 +1,45 @@
+# Rendu des cinq formats de l'extension Cerema sur les deux documents d'exemple.
+# Échoue si un rendu échoue ou si les jetons générés ne sont plus à jour.
+name: Rendu des formats Cerema
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  rendu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: 1.7.32
+
+      - uses: astral-sh/setup-uv@v7
+
+      - name: Dépendances Python
+        run: uv sync
+
+      - name: Jetons à jour
+        run: |
+          uv run python outils/generer_jetons.py
+          git diff --exit-code -- _extensions/cerema
+
+      - name: Rendu des formats
+        env:
+          QUARTO_PYTHON: ${{ github.workspace }}/.venv/bin/python
+        run: |
+          for doc in rapport template; do
+            for format in cerema-typst cerema-revealjs cerema-docx cerema-pptx cerema-html; do
+              quarto render "$doc.qmd" --to "$format"
+            done
+          done
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: rendus
+          path: |
+            *.pdf
+            *.docx
+            *.pptx
