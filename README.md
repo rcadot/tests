@@ -419,7 +419,7 @@ Pour le Word, `pandoc-reference.docx` s'obtient par `quarto pandoc -o pandoc-ref
     │   └── cerema-pptx.lua                         filtre : tableaux numérotés
     ├── html/                                       pages et sites HTML
     │   ├── cerema-html.scss                        thème
-    │   ├── cerema-html-header.html                 en-tête HTML
+    │   ├── cerema-html-header.html                 police Spectral (citations)
     │   └── cerema-html-bandeau.html                logos du pied de page
     ├── revealjs/                                   présentation HTML
     │   ├── cerema.scss                             thème
