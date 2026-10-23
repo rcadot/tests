@@ -73,10 +73,10 @@ $callout-color-caution: darken($corail, 15%);
 .cerema-bandeau-rf { width: 110px; }
 .cerema-bandeau-logo { width: 190px; }
 
-// Sur un site, le bandeau est déplacé dans le pied de page (script de
-// cerema-html-bandeau.html) ; masqué en tête pour éviter un affichage fugace.
-body.nav-fixed .cerema-bandeau:not(.cerema-bandeau-pied),
-body:has(.nav-footer) .cerema-bandeau:not(.cerema-bandeau-pied) {
+// Le bandeau est déplacé dans le pied de page par le script de
+// cerema-html-bandeau.html ; masqué en tête pour éviter un affichage fugace.
+// Sans JavaScript (pas de classe cerema-js), il reste visible en tête.
+.cerema-js .cerema-bandeau:not(.cerema-bandeau-pied) {
   display: none;
 }
 .cerema-bandeau-pied {
@@ -87,6 +87,11 @@ body:has(.nav-footer) .cerema-bandeau:not(.cerema-bandeau-pied) {
   padding: 0.25rem 0;
   .cerema-bandeau-rf { width: 64px; }
   .cerema-bandeau-logo { width: 120px; }
+}
+// Pied de page créé par le script quand la page n'en a pas : mêmes marges
+// que celui d'un site Quarto
+.cerema-pied-cree .nav-footer {
+  padding: 0.5rem 20px;
 }
 
 .navbar {

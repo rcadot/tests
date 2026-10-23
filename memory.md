@@ -68,3 +68,6 @@
   (`.nav-footer-left`) par un script de `cerema-html-bandeau.html`, qui crée un pied de page de même
   structure que Quarto si le site n'en déclare pas (un élément ajouté librement en fin de `body` restait
   invisible). Page isolée : bandeau en tête, inchangé.
+- Pages HTML isolées : même règle que les sites, logos dans le pied de page (créé si absent, classe
+  `cerema-pied-cree`). Le bandeau du haut n'est masqué que sous la classe `cerema-js`, posée par le script :
+  sans JavaScript, les logos restent en tête.
