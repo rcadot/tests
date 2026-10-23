@@ -117,3 +117,11 @@
   (Marianne en WOFF2 et logos/halo en URI data:, ~590 Ko) ; logos en `<span class="cerema-img-…" role="img">`,
   halo des diapositives en `background-image: $cerema-img-halo`. Dernier fichier de `theme:`.
 - Vérifié sur un clone vierge : uv sync, dix rendus, racine propre (aucune copie), revealjs, page et site.
+
+## Version 1.3.1 (revealjs)
+- `output-ext: diapo.html` sur le format revealjs : sinon cerema-revealjs et cerema-html écrivent tous deux
+  `doc.html` (le dernier rendu écrase l'autre). Les deux partagent `doc_files/` sans conflit (libs distinctes).
+- `cerema.lua` : fonction `Pandoc` qui insère une règle horizontale après un `#` de classe `.chapitre`
+  suivi d'autre chose qu'un titre `##` ou une règle. Sous un `#`, reveal.js range les diapositives en pile
+  verticale : URL `#/1/1`, `#/2/1`… (utile pour les captures).
+- crossref français ajouté au format revealjs.

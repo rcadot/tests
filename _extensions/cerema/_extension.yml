@@ -1,11 +1,13 @@
 title: Cerema
 author: Romain Cadot
-version: 1.3.0
+version: 1.3.1
 # Typst 0.12 (Quarto 1.6) requis pour les titres « sticky » du format typst.
 quarto-required: ">=1.6.0"
 contributes:
   formats:
     revealjs:
+      # rapport.diapo.html : ne pas écraser rapport.html du format cerema-html.
+      output-ext: diapo.html
       theme: [default, revealjs/cerema.scss, commun/cerema-jetons.scss, commun/cerema-ressources.scss]
       # Diapositive 16:9 ; 1 pt du modèle PowerPoint (960 x 540 pt) = 4/3 px.
       width: 1280
@@ -18,6 +20,11 @@ contributes:
       lang: fr
       date-format: "MMMM YYYY"
       fig-align: center
+      crossref:
+        tbl-title: "Tableau"
+        fig-title: "Figure"
+        tbl-prefix: "Tableau"
+        fig-prefix: "Figure"
       template-partials:
         - revealjs/title-slide.html
       include-in-header:

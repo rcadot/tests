@@ -71,3 +71,30 @@ function Header(el)
   end
   return nil
 end
+
+--- Sépare le contenu qui suit directement un titre de chapitre.
+-- Un « # Titre » suivi de texte sans « ## » intermédiaire mettait ce texte sur
+-- la diapositive de chapitre (dégradé), par-dessus le titre. Un saut de
+-- diapositive (règle horizontale) le reporte sur une diapositive de contenu.
+-- .chapitre-sommaire et .fin portent volontairement du contenu : non concernés.
+-- @param doc pandoc.Pandoc
+-- @return pandoc.Pandoc modifié
+function Pandoc(doc)
+  if not quarto.doc.is_format("revealjs") then
+    return nil
+  end
+  local blocs = pandoc.Blocks({})
+  local n = #doc.blocks
+  for i, bloc in ipairs(doc.blocks) do
+    blocs:insert(bloc)
+    local suivant = i < n and doc.blocks[i + 1] or nil
+    if bloc.t == "Header" and bloc.level == 1 and a_classe(bloc.classes, "chapitre")
+      and suivant ~= nil
+      and not (suivant.t == "Header" and suivant.level <= 2)
+      and suivant.t ~= "HorizontalRule" then
+      blocs:insert(pandoc.HorizontalRule())
+    end
+  end
+  doc.blocks = blocs
+  return doc
+end

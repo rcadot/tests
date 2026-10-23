@@ -1,5 +1,11 @@
 # Journal des modifications
 
+## 1.3.1
+
+- revealjs : la présentation est écrite dans `doc.diapo.html` (option `output-ext`), elle n'écrase plus `doc.html` du format `cerema-html`.
+- revealjs : le contenu placé directement sous un titre de chapitre (`#` sans `##`) passe sur une diapositive de contenu au lieu de recouvrir le dégradé.
+- revealjs : légendes et renvois en français (« Tableau 1 »).
+
 ## 1.3.0
 
 - Tout ce qui concerne l'extension est rangé dans `_extensions/cerema/` : outils de maintenance (`outils/`) et leurs sources (`outils/sources/`), module Altair (`python/cerema_altair/`), documentation (`doc/`). À la racine du dépôt ne restent que le README, les exemples, l'environnement Python et le workflow.
