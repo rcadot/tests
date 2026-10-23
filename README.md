@@ -225,6 +225,8 @@ format: cerema-html
 
 Les polices et les logos sont copiés à côté de chaque page rendue, y compris dans les sous-dossiers.
 
+Sur une page isolée, le bandeau des logos s'affiche en tête de page. Sur un site (barre de navigation ou pied de page Quarto), un script le déplace dans le pied de page, à gauche ; si le site ne déclare pas de pied de page, l'extension en crée un pour y loger les logos.
+
 ## Accessibilité
 
 Le modèle comporte des paires de couleurs à faible contraste, qu'il convient de connaître.

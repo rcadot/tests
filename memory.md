@@ -64,3 +64,7 @@
   LibreOffice (conversion PDF), html via Chromium. Non vérifié dans Word ni PowerPoint eux-mêmes.
 - Limites : encadré référencé non pris en charge en pptx (avertissement Quarto) ; encadrés docx = rendu
   Quarto par défaut ; sommaire docx à mettre à jour à l'ouverture.
+- Sites HTML : pied de page blanc à filet gris-clair ; les logos passent du bandeau de tête au pied de page
+  (`.nav-footer-left`) par un script de `cerema-html-bandeau.html`, qui crée un pied de page de même
+  structure que Quarto si le site n'en déclare pas (un élément ajouté librement en fin de `body` restait
+  invisible). Page isolée : bandeau en tête, inchangé.
