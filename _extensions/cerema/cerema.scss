@@ -98,7 +98,7 @@ $callout-border-width: 1px;
 .reveal .slides section.cerema-contenu {
   box-sizing: border-box;
   height: 720px;
-  padding: 45px $espace-4 96px $espace-4;
+  padding: 45px $espace-4 96px 113px;   // contenu aligné sur le titre, à 85 pt du bord
   overflow: hidden;
 
   // Bloc hachuré derrière le début du titre (36-168 pt, 1-204 pt)
@@ -108,7 +108,7 @@ $callout-border-width: 1px;
     left: 48px;
     top: 1px;
     width: 176px;
-    height: 271px;
+    height: 140px;   // réduit pour rester derrière le titre (271 px dans le modèle)
     background: repeating-linear-gradient(135deg, rgba(239, 119, 87, .39) 0 1.4px, transparent 1.4px 8px);
     z-index: -1;
     pointer-events: none;
@@ -131,7 +131,7 @@ $callout-border-width: 1px;
 
   > h2 {
     position: relative;
-    margin: 0 0 $espace-3 49px;   // titre à 85 pt du bord
+    margin: 0 0 $espace-4 0;      // titre à 85 pt du bord
     padding-right: 220px;          // dégage le halo
     font-size: 37px;
     line-height: 38px;

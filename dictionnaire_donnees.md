@@ -42,7 +42,7 @@
 
 | Classe | Effet | Fichier |
 |---|---|---|
-| (aucune, `##`) | Diapositive de contenu : barre, hachures, halo, pied de page | `cerema-after-body.html`, `cerema.scss` |
+| (aucune, `##`) | Diapositive de contenu : barre, hachures (140 px de haut), halo, pied de page ; contenu aligné sur le titre à 113 px | `cerema-after-body.html`, `cerema.scss` |
 | (aucune, `#`) ou `.chapitre` | Dégradé corail vers indigo-profond, titre blanc | `cerema.lua` |
 | `.chapitre-sommaire` | Dégradé sur la moitié gauche, liste à droite | `cerema.lua` |
 | `.fin` | Dégradé à 73 % d'opacité, texte blanc | `cerema.lua` |

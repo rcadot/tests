@@ -15,6 +15,8 @@
 - Habillage des diapositives de contenu et pied de page ajoutés en JS (`cerema-after-body.html`)
   pour qu'ils suivent la mise à l'échelle de reveal.js.
 - En-tête de tableau : texte noir par défaut (7,4:1) ; `.entete-blanc` restitue le blanc du modèle.
+- Contenu des diapositives de texte aligné sur le titre (113 px du bord), 64 px sous le titre ;
+  hachures réduites à 140 px de haut (271 px dans le modèle) pour ne plus chevaucher le contenu.
 - Bouton du menu déplacé en bas à droite pour libérer les logos.
 
 ## Vérification
