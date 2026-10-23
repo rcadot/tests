@@ -1,0 +1,64 @@
+---
+title: "Diagnostic foncier du territoire"
+subtitle: "Exemple de rapport d'étude Cerema"
+shorttitle: "Diagnostic foncier"
+author:
+  - name: Prénom Nom
+    affiliations:
+      - name: Cerema
+date: today
+abstract: "Ce document illustre le format cerema-typst : couverture, sommaire, titres, tableaux et encadrés."
+format:
+  cerema-typst: default
+  cerema-revealjs: default
+---
+
+# Tableaux
+
+@tbl-conso résume la consommation d'espaces.
+
+| Commune | Population | ENAF consommés (ha) | Part habitat |
+|:--------|-----------:|--------------------:|-------------:|
+| Perpignan | 119 656 | 112,4 | 61 % |
+| Canet-en-Roussillon | 12 498 | 23,1 | 74 % |
+| Saint-Estève | 11 773 | 18,7 | 69 % |
+| Rivesaltes | 8 873 | 31,2 | 42 % |
+| Bompas | 7 640 | 14,9 | 80 % |
+| **Total** | **160 440** | **200,3** | **62 %** |
+
+: Consommation d'espaces 2011-2021 (valeurs fictives) {#tbl-conso}
+
+# Encadrés
+
+## Types d'encadrés
+
+::: {.callout-note}
+Les fichiers fonciers sont millésimés au 1^er^ janvier de l'année N.
+:::
+
+::: {.callout-tip}
+## Bonne pratique
+Croiser DV3F et fichiers fonciers sur `idpar`.
+:::
+
+::: {.callout-warning}
+La comparaison entre millésimes antérieurs à 2011 est délicate.
+:::
+
+::: {.callout-important}
+Ces chiffres ne sont pas opposables.
+:::
+
+::: {.callout-caution}
+## Prudence
+Secret statistique : ne pas diffuser les cellules inférieures à 11 locaux.
+:::
+
+## Encadré référencé
+
+::: {#nte-def .callout-note}
+## Définition des ENAF
+Espaces naturels, agricoles et forestiers.
+:::
+
+Voir @nte-def.

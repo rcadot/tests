@@ -1,7 +1,8 @@
 title: Cerema
 author: Romain Cadot
-version: 1.0.0
-quarto-required: ">=1.4.0"
+version: 1.1.0
+# Typst 0.12 (Quarto 1.6) requis pour les titres « sticky » du format typst.
+quarto-required: ">=1.6.0"
 contributes:
   formats:
     revealjs:
@@ -36,3 +37,22 @@ contributes:
         - fonts/Marianne-Bold.otf
         - fonts/Marianne-BoldItalic.otf
         - fonts/Marianne-ExtraBold.otf
+    typst:
+      template-partials:
+        - typst-template.typ
+        - typst-show.typ
+      papersize: a4
+      lang: fr
+      region: FR
+      # Le sommaire stylisé est produit par le gabarit ; toc: false le retire.
+      toc: true
+      toc-depth: 3
+      date-format: "MMMM YYYY"
+      crossref:
+        tbl-title: "Tableau"
+        fig-title: "Figure"
+        tbl-prefix: "Tableau"
+        fig-prefix: "Figure"
+      execute:
+        echo: false
+        warning: false

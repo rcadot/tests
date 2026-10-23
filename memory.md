@@ -27,3 +27,16 @@
 ## Pistes
 - Pictogrammes LinkedIn et YouTube de la page de fin : absents du design system, à ajouter.
 - Disposition « couverture photo » et « texte et photo(s) » non transposées.
+
+## Format cerema-typst (rapport d'étude PDF)
+- Ajouté dans la même extension (`contributes.formats.typst`) : `--to cerema-typst` ou `--to cerema-revealjs`.
+- Images : chemin absolu Typst `/_extensions/cerema/fig/cerema/` (Quarto passe `--root` = projet).
+  `format-resources` écarté pour Typst : copie à plat à côté du document.
+- Pandoc échappe les métadonnées (`mon\_logo.png`) : la fonction `chemin()` retire les barres obliques.
+- Callouts : `callout()` de Quarto redéfinie ; type retrouvé par `icon_color` (0758E5, 00A047, EB9113,
+  CC1914, FC5300) ; encadrés référencés rendus par une règle `show figure` + `state("prefixe-callout")`.
+- Tableaux Markdown : `set table` global ; `tableau_simple` et `tableau_scientifique` posent `fill: none`.
+- Correspondance des images fournies supposée : marianne.png (bloc-marque seul), cerema.png (logo
+  horizontal), fond.jpg (photo), fin_rapport.jpg (RF + Cerema). marianne.png converti depuis un .webp.
+- Testé avec Quarto 1.7.32 / Typst 0.13.0 ; fontawesome remplacé par un paquet factice hors ligne.
+- Pistes : numérotation des pages à partir du contenu ; polices Marianne pour le rapport (charte = Arial).
