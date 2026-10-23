@@ -17,11 +17,11 @@ import altair as alt
 from altair.vegalite.v6.display import html_renderer, png_renderer
 
 JETONS: dict[str, str] = json.loads(
-    (
-        Path(__file__).parent / "_extensions" / "cerema" / "commun" / "jetons.json"
-    ).read_text(encoding="utf-8")
+    (Path(__file__).resolve().parents[2] / "commun" / "jetons.json").read_text(
+        encoding="utf-8"
+    )
 )
-"""Jetons couleur du design system, générés par outils/generer_jetons.py."""
+"""Jetons couleur du design system, générés par _extensions/cerema/outils/generer_jetons.py."""
 
 INDIGO = JETONS["indigo"]
 INDIGO_PROFOND = JETONS["indigo-profond"]
@@ -86,9 +86,7 @@ def theme_cerema() -> alt.theme.ThemeConfig:
     }
 
 
-DOSSIER_POLICES: Path = (
-    Path(__file__).parent / "_extensions" / "cerema" / "commun" / "polices"
-)
+DOSSIER_POLICES: Path = Path(__file__).resolve().parents[2] / "commun" / "polices"
 """Polices Marianne de l'extension (commun/polices), enregistrées auprès de vl-convert."""
 
 ECHELLE_PNG: float = 2.0

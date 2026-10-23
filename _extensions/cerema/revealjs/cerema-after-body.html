@@ -22,8 +22,8 @@
       var pied = document.createElement("div");
       pied.className = "cerema-pied";
       pied.innerHTML =
-        '<img class="cerema-pied-rf" src="cerema-rf.svg" alt="République française">' +
-        '<img class="cerema-pied-logo" src="cerema-logo.svg" alt="Cerema">' +
+        '<span class="cerema-pied-rf cerema-img-rf" role="img" aria-label="République française"></span>' +
+        '<span class="cerema-pied-logo cerema-img-logo" role="img" aria-label="Cerema"></span>' +
         '<span class="cerema-pied-num">' + (i + 1) + "</span>";
       section.appendChild(pied);
     });

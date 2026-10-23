@@ -1,6 +1,6 @@
 # Dictionnaire de données du modèle Cerema
 
-## Jetons couleur (`cerema.scss`, variables `--cerema-*`, `cerema_altair.py`)
+## Jetons couleur (`cerema.scss`, variables `--cerema-*`, module `cerema_altair`)
 
 | Jeton | Valeur | Usage |
 |---|---|---|
@@ -140,7 +140,7 @@
 | Encadré fin | Espace de 4 pt sous l'encadré |
 | Table | Style neutre de Pandoc, laissé aux tableaux de mise en page de Quarto |
 
-## Graphiques (`cerema_altair.py`)
+## Graphiques (module `cerema_altair`, `python/cerema_altair/`)
 
 | Nom | Type | Rôle |
 |---|---|---|
@@ -152,9 +152,9 @@
 
 | Fichier | Contenu | Lu par |
 |---|---|---|
-| `sources/tokens.json` | Copie du `tokens.json` du design system (source unique) | `outils/generer_jetons.py` |
+| `outils/sources/tokens.json` | Copie du `tokens.json` du design system (source unique) | `outils/generer_jetons.py` |
 | `_extensions/cerema/commun/cerema-jetons.scss` | Variables `$indigo`, `$corail`… | Thèmes revealjs et html (dernier fichier de `theme:`) |
-| `_extensions/cerema/commun/jetons.json` | Nom -> couleur hexadécimale | `cerema_altair.py`, `outils/construire_reference_docx.py` |
+| `_extensions/cerema/commun/jetons.json` | Nom -> couleur hexadécimale | module `cerema_altair`, `outils/construire_reference_docx.py` |
 | `typst-template.typ`, bloc `// <jetons>` | `#let indigo = rgb("#282474")`… | Gabarit Typst (alias `bleucerema`, `orangecerema`… conservés) |
 
 ## Couleurs des encadrés (tous formats)
@@ -166,3 +166,12 @@
 | warning | `jaune` assombri de 25 % |
 | important | `corail` |
 | caution | `corail` assombri (25 % en Typst et Word, 15 % en HTML) |
+
+## Ressources web intégrées (`commun/cerema-ressources.scss`, généré)
+
+| Nom | Type | Rôle |
+|---|---|---|
+| `$cerema-img-rf`, `$cerema-img-logo`, `$cerema-img-halo` | SCSS, `url("data:…")` | Bloc-marque RF, logo Cerema, halo de points |
+| `$cerema-ratio-rf`, `$cerema-ratio-logo`, `$cerema-ratio-halo` | SCSS, nombre | Rapport largeur / hauteur (1,1042 ; 3,3985 ; 0,9804) |
+| `.cerema-img-rf`, `.cerema-img-logo`, `.cerema-img-halo` | classes CSS | Image en fond d'un élément `role="img"`, largeur fixée par le thème |
+| `@font-face` Marianne | CSS | Graisses 300, 400, 400 italique, 500, 700, 700 italique, 800 en WOFF2 |

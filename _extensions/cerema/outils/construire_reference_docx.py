@@ -17,7 +17,7 @@ déjà tous les styles que Pandoc emploie (« Title », « Heading 1 », « Tabl
 
 Usage :
     quarto pandoc -o pandoc-reference.docx --print-default-data-file reference.docx
-    uv run python outils/construire_reference_docx.py \
+    uv run python _extensions/cerema/outils/construire_reference_docx.py \
         pandoc-reference.docx _extensions/cerema/docx/reference.docx
 """
 
@@ -36,15 +36,11 @@ from docx.styles.style import BaseStyle
 from docx.text.paragraph import Paragraph
 
 JETONS: dict[str, str] = json.loads(
-    (
-        Path(__file__).resolve().parent.parent
-        / "_extensions"
-        / "cerema"
-        / "commun"
-        / "jetons.json"
-    ).read_text(encoding="utf-8")
+    (Path(__file__).resolve().parent.parent / "commun" / "jetons.json").read_text(
+        encoding="utf-8"
+    )
 )
-"""Jetons couleur du design system, générés par outils/generer_jetons.py."""
+"""Jetons couleur du design system, générés par _extensions/cerema/outils/generer_jetons.py."""
 
 INDIGO = RGBColor.from_string(JETONS["indigo"][1:])
 NOIR = RGBColor.from_string(JETONS["noir"][1:])
@@ -79,13 +75,7 @@ NOM_STYLE_TABLEAU = "Tableau Cerema"
 POLICE_TEXTE = "Marianne"
 POLICE_TITRE = "Arial"
 
-DOSSIER_FIG = (
-    Path(__file__).resolve().parent.parent
-    / "_extensions"
-    / "cerema"
-    / "commun"
-    / "images"
-)
+DOSSIER_FIG = Path(__file__).resolve().parent.parent / "commun" / "images"
 """Logos partagés avec le format cerema-typst."""
 
 

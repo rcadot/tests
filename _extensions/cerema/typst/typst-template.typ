@@ -5,7 +5,7 @@
 
 // ── Jetons couleur du design system Cerema ───────────────────────────────────
 // <jetons>
-// Généré par outils/generer_jetons.py depuis sources/tokens.json : ne pas modifier.
+// Généré par outils/generer_jetons.py depuis outils/sources/tokens.json : ne pas modifier.
 #let indigo         = rgb("#282474")
 #let indigo-profond = rgb("#262069")
 #let indigo-texte   = rgb("#2F2B74")

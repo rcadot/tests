@@ -1,5 +1,11 @@
 # Journal des modifications
 
+## 1.3.0
+
+- Tout ce qui concerne l'extension est rangé dans `_extensions/cerema/` : outils de maintenance (`outils/`) et leurs sources (`outils/sources/`), module Altair (`python/cerema_altair/`), documentation (`doc/`). À la racine du dépôt ne restent que le README, les exemples, l'environnement Python et le workflow.
+- Polices et logos des formats HTML et revealjs intégrés à la feuille de style (`commun/cerema-ressources.scss`, généré par `outils/generer_ressources_web.py`) : Quarto ne copie plus `Marianne-*.otf` ni les logos à côté des documents rendus.
+- Module `cerema_altair` installé par `uv sync` (paquet déclaré dans `pyproject.toml`) : importable depuis tout document du projet.
+
 ## 1.2.1
 
 - Extension rangée par format : `commun/` (polices, images, jetons), `typst/`, `docx/`, `pptx/`, `html/`, `revealjs/`. Les noms de format et les en-têtes YAML des documents ne changent pas.

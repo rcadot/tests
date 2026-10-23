@@ -1,34 +1,31 @@
 """Génère les jetons couleur de l'extension à partir du design system Cerema.
 
-Source unique : ``sources/tokens.json``, copie du fichier ``project/tokens.json``
+Source unique : ``_extensions/cerema/outils/sources/tokens.json``, copie du fichier ``project/tokens.json``
 du design system Cerema. Le script écrit :
 
 - ``_extensions/cerema/commun/cerema-jetons.scss`` : variables SCSS, partagées par les
   thèmes revealjs et html (le fichier doit venir en dernier dans ``theme:``,
   car Quarto place en tête les valeurs par défaut des derniers fichiers) ;
 - ``_extensions/cerema/commun/jetons.json`` : nom -> couleur hexadécimale, lu par
-  ``cerema_altair.py`` et ``outils/construire_reference_docx.py`` ;
+  le module ``cerema_altair`` et ``outils/construire_reference_docx.py`` ;
 - le bloc compris entre ``// <jetons>`` et ``// </jetons>`` de
   ``_extensions/cerema/typst/typst-template.typ``.
 
 Usage :
-    uv run python outils/generer_jetons.py
+    uv run python _extensions/cerema/outils/generer_jetons.py
 """
 
 import json
 import re
 from pathlib import Path
 
-RACINE = Path(__file__).resolve().parent.parent
-SOURCE = RACINE / "sources" / "tokens.json"
-EXTENSION = RACINE / "_extensions" / "cerema"
+EXTENSION = Path(__file__).resolve().parent.parent
+SOURCE = EXTENSION / "outils" / "sources" / "tokens.json"
 SCSS = EXTENSION / "commun" / "cerema-jetons.scss"
 JSON = EXTENSION / "commun" / "jetons.json"
 TYPST = EXTENSION / "typst" / "typst-template.typ"
 
-EN_TETE = (
-    "Généré par outils/generer_jetons.py depuis sources/tokens.json : ne pas modifier."
-)
+EN_TETE = "Généré par outils/generer_jetons.py depuis outils/sources/tokens.json : ne pas modifier."
 BLOC_TYPST = re.compile(r"(// <jetons>\n).*?(// </jetons>)", re.DOTALL)
 
 
@@ -97,7 +94,7 @@ def ecrire_typst(couleurs: dict[str, str]) -> None:
 
 
 def main() -> None:
-    """Régénère les trois sorties à partir de sources/tokens.json."""
+    """Régénère les trois sorties à partir de outils/sources/tokens.json."""
     couleurs = lire_couleurs(SOURCE)
     ecrire_scss(couleurs)
     ecrire_json(couleurs)
