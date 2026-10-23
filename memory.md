@@ -40,3 +40,27 @@
   horizontal), fond.jpg (photo), fin_rapport.jpg (RF + Cerema). marianne.png converti depuis un .webp.
 - Testé avec Quarto 1.7.32 / Typst 0.13.0 ; fontawesome remplacé par un paquet factice hors ligne.
 - Pistes : numérotation des pages à partir du contenu ; polices Marianne pour le rapport (charte = Arial).
+
+## Formats cerema-pptx, cerema-docx, cerema-html et graphiques Altair
+- Une seule extension, cinq formats ; choix au rendu par `--to`. `rapport.qmd` déclare les cinq.
+- pptx : `reference.pptx` généré par `outils/construire_reference_pptx.py` depuis
+  `sources/Modele_Diaporama_Cerema_2026.potx` (type de contenu .potx -> .pptx, 26 diapositives retirées).
+  Le modèle emploie des zones `body` pour les titres : Pandoc exige `title`/`ctrTitle` pour le titre et une
+  zone sans type (`obj`) pour le contenu. 7 dispositions renommées (Title Slide, Title and Content,
+  Section Header, Two Content, Comparison, Content with Caption, Blank).
+  Pièges : « Slide texte 2 colonnes » a `numCol="2"` (à retirer après découpage en deux zones) ;
+  une zone `dt` hérite d'une police à empattements (Marianne fixée).
+- docx : `reference.docx` généré par `outils/construire_reference_docx.py` depuis la référence Pandoc.
+  Quarto met légendes et encadrés dans des tableaux au style « Table » : le style Cerema est un style à part
+  (« Tableau Cerema », identifiant `TableauCerema`), posé par `cerema-docx.lua` (attribut `custom-style`,
+  qui doit valoir l'identifiant sans espace). LibreOffice ignore la trame `wholeTable` : trame sur les bandes.
+- html : thème `cerema-html.scss` (cosmo), polices via `cerema-html-header.html` (chemins relatifs,
+  `format-resources` copiés à côté de chaque page, sous-dossiers compris), bandeau de logos en
+  `include-before-body`. Testé sur un site avec une page en sous-dossier.
+- Altair : moteur « cerema » = `text/html` + `image/png` (vl-convert-python, polices Marianne enregistrées).
+  Quarto prend le HTML pour html/revealjs, le PNG pour typst/docx/pptx. Le format d'image de Quarto
+  (`QUARTO_FIG_FORMAT`) vaut png aussi en HTML : il ne permet pas de distinguer les sorties.
+- Vérifications : rendus des 5 formats sur `rapport.qmd` et `template.qmd` ; pptx et docx contrôlés via
+  LibreOffice (conversion PDF), html via Chromium. Non vérifié dans Word ni PowerPoint eux-mêmes.
+- Limites : encadré référencé non pris en charge en pptx (avertissement Quarto) ; encadrés docx = rendu
+  Quarto par défaut ; sommaire docx à mettre à jour à l'ouverture.

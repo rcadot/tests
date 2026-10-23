@@ -56,3 +56,58 @@ contributes:
       execute:
         echo: false
         warning: false
+    pptx:
+      # Construit depuis sources/Modele_Diaporama_Cerema_2026.potx par
+      # outils/construire_reference_pptx.py (dispositions renommées pour Pandoc).
+      reference-doc: reference.pptx
+      lang: fr
+      date-format: "MMMM YYYY"
+      slide-level: 2
+      execute:
+        echo: false
+        warning: false
+    docx:
+      # Construit depuis le fichier de référence de Pandoc par
+      # outils/construire_reference_docx.py.
+      reference-doc: reference.docx
+      filters:
+        - cerema-docx.lua
+      lang: fr
+      date-format: "MMMM YYYY"
+      toc: true
+      toc-depth: 3
+      toc-title: "Sommaire"
+      fig-dpi: 200
+      crossref:
+        tbl-title: "Tableau"
+        fig-title: "Figure"
+        tbl-prefix: "Tableau"
+        fig-prefix: "Figure"
+      execute:
+        echo: false
+        warning: false
+    html:
+      theme: [cosmo, cerema-html.scss]
+      lang: fr
+      date-format: "MMMM YYYY"
+      toc: true
+      toc-title: "Sommaire"
+      include-in-header:
+        - cerema-html-header.html
+      include-before-body:
+        - cerema-html-bandeau.html
+      format-resources:
+        - assets/cerema-logo.svg
+        - assets/cerema-rf.svg
+        - fonts/Marianne-Light.otf
+        - fonts/Marianne-Regular.otf
+        - fonts/Marianne-RegularItalic.otf
+        - fonts/Marianne-Medium.otf
+        - fonts/Marianne-Bold.otf
+        - fonts/Marianne-BoldItalic.otf
+        - fonts/Marianne-ExtraBold.otf
+      crossref:
+        tbl-title: "Tableau"
+        fig-title: "Figure"
+        tbl-prefix: "Tableau"
+        fig-prefix: "Figure"

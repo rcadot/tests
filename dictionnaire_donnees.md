@@ -108,3 +108,37 @@
 | `fig/cerema/marianne.png`, `fig/cerema/cerema.png` | Fournis par l'utilisateur | Logos de couverture du rapport Typst |
 | `fig/cerema/fond.jpg` | Fourni par l'utilisateur | Photo de couverture par défaut (« photo à remplacer ») |
 | `fig/cerema/fin_rapport.jpg` | Fourni par l'utilisateur | Bloc-marque de la page de fin du rapport |
+
+## Dispositions PowerPoint (`reference.pptx`)
+
+| Nom Pandoc | Disposition du modèle | Zones (type, index) |
+|---|---|---|
+| Title Slide | Slide couv | `ctrTitle` ; `subTitle` 1 (sous-titre et auteur) ; `dt` 10 (date) |
+| Title and Content | Slide texte seulement | `title` ; contenu 1 |
+| Section Header | Slide fond dégradé | `title` |
+| Two Content | Slide texte 2 colonnes | `title` ; contenus 1 et 2 |
+| Comparison | Slide texte + graphiques | `title` ; intertitres `body` 1 et 3 ; contenus 2 et 4 |
+| Content with Caption | Page avec 1 photo + texte | `title` ; contenu 1 (image) ; `body` 2 (texte) |
+| Blank | Derniere page | inchangée |
+
+## Styles Word (`reference.docx`)
+
+| Style | Rendu |
+|---|---|
+| Normal, Body Text, First Paragraph, Compact | Marianne 11 pt noir |
+| Title | Arial gras 26 pt `indigo-profond`, filet `corail` dessous |
+| Subtitle | Marianne 16 pt `indigo` |
+| Heading 1 | Arial gras 18 pt `indigo`, capitales, filet `corail` à gauche |
+| Heading 2, Heading 3 | Arial gras 14 et 12 pt `indigo` |
+| Block Text | Marianne italique 12 pt `indigo`, filet `indigo` à gauche |
+| Caption, Table Caption, Image Caption | Marianne italique 9 pt noir |
+| Tableau Cerema (`TableauCerema`) | En-tête `corail`, texte noir gras ; lignes `gris-tableau` ; filets blancs ; 9 pt |
+| Table | Style neutre de Pandoc, laissé aux tableaux de mise en page de Quarto |
+
+## Graphiques (`cerema_altair.py`)
+
+| Nom | Type | Rôle |
+|---|---|---|
+| `rendu_html_et_png` | fonction | Moteur de rendu « cerema » : paquet MIME `text/html` + `image/png` |
+| `ECHELLE_PNG` | float | Facteur d'échelle des PNG (2) |
+| `DOSSIER_POLICES` | Path | `_extensions/cerema/fonts`, enregistré auprès de vl-convert |

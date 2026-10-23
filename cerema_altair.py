@@ -3,9 +3,17 @@
 L'import du module enregistre le thème « cerema » et l'active.
 Barres en indigo-profond, séries catégorielles dans l'ordre indigo-profond,
 corail, jaune, olive, vert, bleu, comme le prescrit le livre de marque.
+
+Il active aussi le moteur de rendu « cerema », qui joint une image PNG au
+graphique interactif : Quarto garde le HTML pour les formats web (html,
+revealjs) et prend le PNG pour les autres (typst, docx, pptx).
 """
 
+from pathlib import Path
+from typing import Any
+
 import altair as alt
+from altair.vegalite.v6.display import html_renderer, png_renderer
 
 INDIGO = "#282474"
 INDIGO_PROFOND = "#262069"
@@ -68,3 +76,49 @@ def theme_cerema() -> alt.theme.ThemeConfig:
             },
         }
     }
+
+
+DOSSIER_POLICES: Path = Path(__file__).parent / "_extensions" / "cerema" / "fonts"
+"""Polices Marianne de l'extension, enregistrées auprès de vl-convert."""
+
+ECHELLE_PNG: float = 2.0
+"""Facteur d'échelle des images PNG (2 : netteté à l'impression)."""
+
+
+def _enregistrer_polices() -> None:
+    """Rend Marianne disponible pour l'export PNG.
+
+    vl-convert ne voit que les polices du système ; sans Marianne installée,
+    les PNG retomberaient sur Arial. Sans vl-convert, ne fait rien.
+    """
+    try:
+        import vl_convert as vlc
+    except ImportError:
+        return
+    if DOSSIER_POLICES.is_dir():
+        vlc.register_font_directory(str(DOSSIER_POLICES))
+
+
+def rendu_html_et_png(spec: dict, **metadata: Any) -> tuple[dict, dict]:
+    """Produit le graphique en HTML interactif et en image PNG.
+
+    Args:
+        spec: Spécification Vega-Lite transmise par Altair.
+        **metadata: Options d'intégration transmises au rendu HTML.
+
+    Returns:
+        Le paquet MIME (``text/html`` et ``image/png``) et ses métadonnées.
+        Sans vl-convert, le paquet ne contient que le HTML.
+    """
+    paquet = dict(html_renderer(spec, **metadata))
+    try:
+        image, meta = png_renderer(spec, scale_factor=ECHELLE_PNG)
+    except (ImportError, ValueError):
+        return paquet, {}
+    paquet.update(image)
+    return paquet, meta
+
+
+_enregistrer_polices()
+alt.renderers.register("cerema", rendu_html_et_png)
+alt.renderers.enable("cerema")
