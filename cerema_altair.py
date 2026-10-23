@@ -9,21 +9,29 @@ graphique interactif : Quarto garde le HTML pour les formats web (html,
 revealjs) et prend le PNG pour les autres (typst, docx, pptx).
 """
 
+import json
 from pathlib import Path
 from typing import Any
 
 import altair as alt
 from altair.vegalite.v6.display import html_renderer, png_renderer
 
-INDIGO = "#282474"
-INDIGO_PROFOND = "#262069"
-CORAIL = "#EF7757"
-JAUNE = "#F7D05C"
-OLIVE = "#96AB5B"
-VERT = "#448D60"
-BLEU = "#5971B3"
-GRIS_CLAIR = "#E7E6E6"
-NOIR = "#000000"
+JETONS: dict[str, str] = json.loads(
+    (Path(__file__).parent / "_extensions" / "cerema" / "jetons.json").read_text(
+        encoding="utf-8"
+    )
+)
+"""Jetons couleur du design system, générés par outils/generer_jetons.py."""
+
+INDIGO = JETONS["indigo"]
+INDIGO_PROFOND = JETONS["indigo-profond"]
+CORAIL = JETONS["corail"]
+JAUNE = JETONS["jaune"]
+OLIVE = JETONS["olive"]
+VERT = JETONS["vert"]
+BLEU = JETONS["bleu"]
+GRIS_CLAIR = JETONS["gris-clair"]
+NOIR = JETONS["noir"]
 
 SERIES: list[str] = [INDIGO_PROFOND, CORAIL, JAUNE, OLIVE, VERT, BLEU]
 """Ordre des couleurs pour les séries catégorielles."""

@@ -4,10 +4,14 @@ Le point de départ est le fichier de référence par défaut de Pandoc, qui por
 déjà tous les styles que Pandoc emploie (« Title », « Heading 1 », « Table »,
 « Image Caption »…). Le script les habille selon le design system Cerema :
 
-- texte courant en Marianne 11 pt noir, titres en Arial gras indigo ;
-- titre de niveau 1 en capitales, précédé d'un filet corail à gauche ;
-- style de tableau « Tableau Cerema » : en-tête corail (texte noir gras,
-  7,4:1), lignes gris-tableau ;
+- texte courant en Marianne 11 pt noir ;
+- titres comme ceux du rapport PDF (cerema-typst) : Arial gras indigo, niveau 1
+  en capitales, niveau 4 en italique corail, niveau 5 en italique gris ;
+- style de tableau « Tableau Cerema », modèle commun aux formats : en-tête
+  indigo à texte blanc gras, filets horizontaux gris, une ligne sur deux
+  teintée, aucun filet vertical ;
+- styles des encadrés (« Encadré note », « Encadré note titre »…) : filet
+  coloré à gauche et fond pâle, comme dans le rapport PDF ;
 - en-tête de première page avec le bloc-marque République française et le
   logo Cerema, pied de page avec le titre court et la pagination « n / N ».
 
@@ -17,6 +21,7 @@ Usage :
         pandoc-reference.docx _extensions/cerema/reference.docx
 """
 
+import json
 import sys
 from pathlib import Path
 
@@ -30,12 +35,42 @@ from docx.shared import Cm, Pt, RGBColor
 from docx.styles.style import BaseStyle
 from docx.text.paragraph import Paragraph
 
-INDIGO = RGBColor(0x28, 0x24, 0x74)
-INDIGO_PROFOND = RGBColor(0x26, 0x20, 0x69)
-NOIR = RGBColor(0x00, 0x00, 0x00)
-CORAIL_HEX = "EF7757"
-GRIS_TABLEAU_HEX = "F2F2F2"
-GRIS_CLAIR_HEX = "E7E6E6"
+JETONS: dict[str, str] = json.loads(
+    (
+        Path(__file__).resolve().parent.parent
+        / "_extensions"
+        / "cerema"
+        / "jetons.json"
+    ).read_text(encoding="utf-8")
+)
+"""Jetons couleur du design system, générés par outils/generer_jetons.py."""
+
+INDIGO = RGBColor.from_string(JETONS["indigo"][1:])
+NOIR = RGBColor.from_string(JETONS["noir"][1:])
+CORAIL = RGBColor.from_string(JETONS["corail"][1:])
+GRIS_HEX = "87888A"
+"""Gris des titres de niveau 5 et des filets (gabarit Typst), hors design system."""
+
+
+def eclaircir(couleur: str, proportion: float) -> str:
+    """Mélange une couleur avec du blanc, comme ``lighten`` de Typst (approché).
+
+    Args:
+        couleur: Couleur hexadécimale sans dièse.
+        proportion: Part de blanc, entre 0 et 1.
+
+    Returns:
+        La couleur éclaircie, hexadécimale sans dièse.
+    """
+    canaux = [int(couleur[i : i + 2], 16) for i in (0, 2, 4)]
+    return "".join(f"{round(c + (255 - c) * proportion):02X}" for c in canaux)
+
+
+INDIGO_HEX = JETONS["indigo"][1:]
+LIGNE_TEINTEE_HEX = eclaircir(INDIGO_HEX, 0.94)
+"""Ligne paire des tableaux (indigo éclairci à 94 %, comme le PDF)."""
+FILET_HEX = eclaircir(GRIS_HEX, 0.40)
+"""Filets horizontaux des tableaux (gris éclairci à 40 %, comme le PDF)."""
 
 NOM_STYLE_TABLEAU = "Tableau Cerema"
 """Style de tableau, repris par le filtre _extensions/cerema/cerema-docx.lua."""
@@ -85,7 +120,6 @@ def texte(
     police(style, nom_police)
     style.font.size = Pt(taille)
     style.font.color.rgb = couleur
-    style.font.color.theme_color = None
     style.font.bold = gras
     style.font.italic = italique
 
@@ -140,9 +174,8 @@ def styles_texte(document: Document) -> None:
     espacement(s["First Paragraph"], 0, 8)
     s["Body Text"].paragraph_format.line_spacing = 1.15
 
-    texte(s["Title"], POLICE_TITRE, 26, INDIGO_PROFOND, gras=True)
+    texte(s["Title"], POLICE_TITRE, 26, INDIGO, gras=True)
     espacement(s["Title"], 0, 12)
-    filet(s["Title"], "bottom", CORAIL_HEX, 24, 8)
     s["Title"].paragraph_format.alignment = WD_ALIGN_PARAGRAPH.LEFT
     texte(s["Subtitle"], POLICE_TEXTE, 16, INDIGO)
     s["Subtitle"].paragraph_format.alignment = WD_ALIGN_PARAGRAPH.LEFT
@@ -152,22 +185,29 @@ def styles_texte(document: Document) -> None:
     texte(s["Abstract Title"], POLICE_TITRE, 12, INDIGO, gras=True)
     texte(s["Abstract"], POLICE_TEXTE, 10, NOIR)
 
-    titres = {1: 18, 2: 14, 3: 12}
+    # Corps des titres du gabarit Typst : 19, 16 et 12 pt.
+    titres = {1: 19, 2: 16, 3: 12}
     for niveau, taille in titres.items():
         style = s[f"Heading {niveau}"]
         texte(style, POLICE_TITRE, taille, INDIGO, gras=True)
         espacement(style, 18 if niveau == 1 else 12, 6)
         style.paragraph_format.keep_with_next = True
     s["Heading 1"].font.all_caps = True
-    filet(s["Heading 1"], "left", CORAIL_HEX, 48, 8)
+    texte(s["Heading 4"], POLICE_TITRE, 11, CORAIL, italique=True)
+    for niveau in range(5, 10):
+        texte(
+            s[f"Heading {niveau}"],
+            POLICE_TITRE,
+            11,
+            RGBColor.from_string(GRIS_HEX),
+            italique=True,
+        )
     for niveau in range(4, 10):
-        style = s[f"Heading {niveau}"]
-        texte(style, POLICE_TEXTE, 11, INDIGO, gras=True, italique=niveau > 4)
-        style.paragraph_format.keep_with_next = True
+        s[f"Heading {niveau}"].paragraph_format.keep_with_next = True
     texte(s["TOC Heading"], POLICE_TITRE, 18, INDIGO, gras=True)
 
     texte(s["Block Text"], POLICE_TEXTE, 12, INDIGO, italique=True)
-    filet(s["Block Text"], "left", "282474", 12, 8)
+    filet(s["Block Text"], "left", JETONS["indigo"][1:], 12, 8)
     # « Caption » est un nom intégré que python-docx stocke en minuscules :
     # on compare donc les noms affichés plutôt que d'indexer.
     legendes = {"caption", "table caption", "image caption"}
@@ -176,7 +216,6 @@ def styles_texte(document: Document) -> None:
             texte(style, POLICE_TEXTE, 9, NOIR, italique=True)
     texte(s["Footnote Text"], POLICE_TEXTE, 9, NOIR)
     s["Hyperlink"].font.color.rgb = INDIGO
-    s["Hyperlink"].font.color.theme_color = None
 
 
 def style_tableau(document: Document) -> None:
@@ -186,9 +225,8 @@ def style_tableau(document: Document) -> None:
     tableaux de mise en page (légendes, encadrés). Le filtre cerema-docx.lua
     n'attribue « Tableau Cerema » qu'aux tableaux écrits dans le document.
 
-    En-tête corail à texte noir gras (le blanc du modèle n'atteint que 2,82:1),
-    cellules gris-tableau séparées par des filets blancs, comme dans le modèle
-    PowerPoint.
+    En-tête indigo à texte blanc gras, filets horizontaux gris, une ligne sur
+    deux teintée d'indigo pâle, aucun filet vertical : le modèle du rapport PDF.
 
     Args:
         document: Document de référence modifié sur place.
@@ -201,12 +239,12 @@ def style_tableau(document: Document) -> None:
     def bordures(
         parent: OxmlElement, nom: str, couleur: str, cotes: tuple[str, ...]
     ) -> None:
-        """Ajoute un bloc de bordures blanches ou grises."""
+        """Ajoute un bloc de bordures simples de 0,5 pt sur les côtés donnés."""
         bloc = OxmlElement(nom)
         for cote in cotes:
             trait = OxmlElement(f"w:{cote}")
             trait.set(qn("w:val"), "single")
-            trait.set(qn("w:sz"), "8")
+            trait.set(qn("w:sz"), "4")
             trait.set(qn("w:space"), "0")
             trait.set(qn("w:color"), couleur)
             bloc.append(trait)
@@ -232,12 +270,7 @@ def style_tableau(document: Document) -> None:
     bande = OxmlElement("w:tblStyleRowBandSize")
     bande.set(qn("w:val"), "1")
     tblpr.append(bande)
-    bordures(
-        tblpr,
-        "w:tblBorders",
-        "FFFFFF",
-        ("top", "left", "bottom", "right", "insideH", "insideV"),
-    )
+    bordures(tblpr, "w:tblBorders", FILET_HEX, ("bottom", "insideH"))
     marges = OxmlElement("w:tblCellMar")
     for cote, valeur in (("top", 40), ("left", 100), ("bottom", 40), ("right", 100)):
         marge = OxmlElement(f"w:{cote}")
@@ -247,24 +280,96 @@ def style_tableau(document: Document) -> None:
     tblpr.append(marges)
     element.append(tblpr)
 
-    # Trame grise posée sur les deux bandes de lignes : LibreOffice ignore la
-    # trame « wholeTable », Word et LibreOffice appliquent celle des bandes.
-    for bande_lignes in ("band1Horz", "band2Horz"):
-        ensemble = OxmlElement("w:tblStylePr")
-        ensemble.set(qn("w:type"), bande_lignes)
-        fond(ensemble, GRIS_TABLEAU_HEX)
-        element.append(ensemble)
+    # Une ligne sur deux teintée : la deuxième bande suit la première ligne de
+    # données, comme les lignes paires du gabarit Typst.
+    paire = OxmlElement("w:tblStylePr")
+    paire.set(qn("w:type"), "band2Horz")
+    fond(paire, LIGNE_TEINTEE_HEX)
+    element.append(paire)
+
+    # Texte de l'en-tête, posé sur les cellules par cerema-docx.lua : la couleur
+    # de la première ligne du style de tableau est ignorée par LibreOffice.
+    caractere = document.styles.add_style("Tableau entête", WD_STYLE_TYPE.CHARACTER)
+    caractere.font.bold = True
+    caractere.font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
 
     entete = OxmlElement("w:tblStylePr")
     entete.set(qn("w:type"), "firstRow")
     rpr = OxmlElement("w:rPr")
     rpr.append(OxmlElement("w:b"))
     couleur = OxmlElement("w:color")
-    couleur.set(qn("w:val"), "000000")
+    couleur.set(qn("w:val"), "FFFFFF")
     rpr.append(couleur)
     entete.append(rpr)
-    fond(entete, CORAIL_HEX)
+    fond(entete, INDIGO_HEX)
     element.append(entete)
+
+
+def assombrir(couleur: str, proportion: float) -> str:
+    """Mélange une couleur avec du noir, comme ``darken`` de Typst (approché).
+
+    Args:
+        couleur: Couleur hexadécimale sans dièse.
+        proportion: Part de noir, entre 0 et 1.
+
+    Returns:
+        La couleur assombrie, hexadécimale sans dièse.
+    """
+    canaux = [int(couleur[i : i + 2], 16) for i in (0, 2, 4)]
+    return "".join(f"{round(c * (1 - proportion)):02X}" for c in canaux)
+
+
+COULEURS_ENCADRES: dict[str, str] = {
+    "note": JETONS["indigo"][1:],
+    "tip": JETONS["vert"][1:],
+    "warning": assombrir(JETONS["jaune"][1:], 0.25),
+    "important": JETONS["corail"][1:],
+    "caution": assombrir(JETONS["corail"][1:], 0.25),
+}
+"""Type d'encadré Quarto -> couleur, comme dans le gabarit Typst."""
+
+
+def styles_encadres(document: Document) -> None:
+    """Crée les styles de paragraphe des encadrés, repris par cerema-docx.lua.
+
+    Pour chaque type : « Encadré <type> » (corps : filet coloré de 3 pt à
+    gauche, fond éclairci à 92 %) et « Encadré <type> titre » (même cadre,
+    texte gras de la couleur du type). « Encadré fin » ménage l'espace sous
+    l'encadré.
+
+    Args:
+        document: Document de référence modifié sur place.
+    """
+    s = document.styles
+    for type_encadre, couleur in COULEURS_ENCADRES.items():
+        corps = s.add_style(f"Encadré {type_encadre}", WD_STYLE_TYPE.PARAGRAPH)
+        corps.base_style = s["Body Text"]
+        corps.quick_style = False
+        texte(corps, POLICE_TEXTE, 10.5, NOIR)
+        espacement(corps, 0, 0)
+        corps.paragraph_format.left_indent = Cm(0.3)
+        corps.paragraph_format.right_indent = Cm(0.1)
+        filet(corps, "left", couleur, 24, 8)
+        ppr = corps.element.get_or_add_pPr()
+        trame = OxmlElement("w:shd")
+        trame.set(qn("w:val"), "clear")
+        trame.set(qn("w:color"), "auto")
+        trame.set(qn("w:fill"), eclaircir(couleur, 0.92))
+        ppr.append(trame)
+
+        titre = s.add_style(f"Encadré {type_encadre} titre", WD_STYLE_TYPE.PARAGRAPH)
+        titre.base_style = corps
+        titre.quick_style = False
+        titre.font.bold = True
+        titre.font.color.rgb = RGBColor.from_string(couleur)
+        titre.paragraph_format.space_before = Pt(10)
+        titre.paragraph_format.keep_with_next = True
+
+    fin = s.add_style("Encadré fin", WD_STYLE_TYPE.PARAGRAPH)
+    fin.base_style = s["Body Text"]
+    fin.quick_style = False
+    fin.font.size = Pt(4)
+    espacement(fin, 0, 4)
 
 
 def champ(paragraphe: Paragraph, instruction: str) -> None:
@@ -331,6 +436,7 @@ def construire(source: Path, sortie: Path) -> None:
     document = Document(str(source))
     styles_texte(document)
     style_tableau(document)
+    styles_encadres(document)
     entetes_et_pieds(document)
     document.save(str(sortie))
 

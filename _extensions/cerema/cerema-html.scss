@@ -1,18 +1,8 @@
 /*-- scss:defaults --*/
 
 // Thème Bootstrap des pages et sites HTML (format cerema-html).
-// Jetons couleur du design system Cerema : mêmes valeurs que cerema.scss.
-$indigo: #282474;
-$indigo-profond: #262069;
-$corail: #EF7757;
-$jaune: #F7D05C;
-$vert: #448D60;
-$bleu: #5971B3;
-$fond-lavande: #E7E4EF;
-$gris-clair: #E7E6E6;
-$gris-tableau: #F2F2F2;
-$blanc: #FFFFFF;
-$noir: #000000;
+// Jetons couleur : cerema-jetons.scss, généré depuis le design system
+// (outils/generer_jetons.py) et placé en dernier dans `theme:`.
 
 $police-marianne: Marianne, Arial, sans-serif;
 $police-titre: Arial, "Helvetica Neue", sans-serif;
@@ -98,60 +88,52 @@ $callout-color-caution: darken($corail, 15%);
   border-bottom: 4px solid $corail;
 }
 
-// Titre du document : Arial gras indigo-profond, filet corail dessous
+// Titre du document : Arial gras indigo, comme dans le rapport PDF
 #title-block-header .title {
   font-family: $police-titre;
   font-weight: 700;
-  color: $indigo-profond;
-  padding-bottom: 0.4em;
-  border-bottom: 4px solid $corail;
+  color: $indigo;
 }
 #title-block-header .subtitle {
   color: $indigo;
   font-weight: 400;
 }
 
-// Titres de niveau 2 du corps : barre-repère corail, comme sur les diapositives
-// (la marge, qui porte « Sommaire » et « Autres formats », n'est pas concernée)
+// Titres du corps : indigo, sans filet, comme dans le rapport PDF
 h1:not(.title), h2 {
   border-bottom: none;
-}
-main.content h2 {
-  position: relative;
-  padding-left: 0.9em;
-}
-main.content h2::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.15em;
-  width: 0.35em;
-  height: 1em;
-  background: $corail;
 }
 h3 { color: $indigo; }
 h4, h5, h6 { color: $indigo; font-family: $police-marianne; }
 
-// Tableaux : en-tête corail à texte noir gras (7,4:1), lignes gris-tableau,
-// filets blancs, sans arrondi
+// Tableaux, modèle commun aux formats (rapport PDF, Word) : en-tête indigo à
+// texte blanc gras, filets horizontaux gris, une ligne sur deux teintée,
+// aucun filet vertical
 .table, table:not(.sourceCode) {
-  --bs-table-bg: #{$gris-tableau};
+  --bs-table-bg: transparent;
+  --bs-table-striped-bg: transparent;
   border-collapse: collapse;
   font-size: 0.92rem;
 }
 table:not(.sourceCode) > thead > tr > th {
-  background: $corail;
-  color: $noir;
+  background: $indigo;
+  color: $blanc;
   font-weight: 700;
-  border-bottom: none;
+  border: none;
 }
 table:not(.sourceCode) > tbody > tr > td,
 table:not(.sourceCode) > thead > tr > th {
-  border: 2px solid $blanc;
+  border-left: none;
+  border-right: none;
   padding: 0.4rem 0.7rem;
 }
 table:not(.sourceCode) > tbody > tr > td {
-  background: $gris-tableau;
+  border-top: none;
+  border-bottom: 0.5px solid mix($blanc, #87888A, 40%);
+  background: transparent;
+}
+table:not(.sourceCode) > tbody > tr:nth-child(even) > td {
+  background: mix($blanc, $indigo, 94%);
 }
 caption, .figure-caption, figcaption {
   color: $noir;

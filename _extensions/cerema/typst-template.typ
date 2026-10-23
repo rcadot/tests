@@ -3,21 +3,50 @@
 // Pas d'#import externe : tout est inline. Les images de la charte sont appelées
 // par chemin absolu Typst (voir dossier-fig), résolu depuis la racine du projet.
 
-// ── Palette de couleurs Cerema ────────────────────────────────────────────────
-#let bleucerema         = rgb(41, 37, 116)
-#let orangecerema       = rgb(239, 119, 87)
-#let gris               = rgb(135, 136, 138)
-#let bleuexpertise      = rgb(38, 33, 106)
-#let jaunebatiment      = rgb(247, 208, 92)
-#let orangemobilite     = rgb(239, 119, 87)
-#let vertinfratransport = rgb(150, 171, 91)
-#let vertenvrisque      = rgb(68, 141, 96)
-#let bleumerlittoral    = rgb(90, 113, 180)
+// ── Jetons couleur du design system Cerema ───────────────────────────────────
+// <jetons>
+// Généré par outils/generer_jetons.py depuis sources/tokens.json : ne pas modifier.
+#let indigo         = rgb("#282474")
+#let indigo-profond = rgb("#262069")
+#let indigo-texte   = rgb("#2F2B74")
+#let corail         = rgb("#EF7757")
+#let corail-pale    = rgb("#F6B5A4")
+#let jaune          = rgb("#F7D05C")
+#let olive          = rgb("#96AB5B")
+#let vert           = rgb("#448D60")
+#let bleu           = rgb("#5971B3")
+#let fond-lavande   = rgb("#E7E4EF")
+#let fond-jaune     = rgb("#FDF6DE")
+#let fond-corail    = rgb("#FCEAE5")
+#let fond-olive     = rgb("#ECF3DA")
+#let fond-vert      = rgb("#D6EBDE")
+#let fond-bleu      = rgb("#E4E8F2")
+#let gris-clair     = rgb("#E7E6E6")
+#let gris-tableau   = rgb("#F2F2F2")
+#let blanc          = rgb("#FFFFFF")
+#let noir           = rgb("#000000")
+// </jetons>
 
-// ── Police ────────────────────────────────────────────────────────────────────
-// Arial est absente des postes Linux et des CI : Typst retomberait alors sur une
-// police à empattements. Liberation Sans a les mêmes métriques qu'Arial.
-#let police = ("Arial", "Liberation Sans")
+// ── Palette historique du rapport ─────────────────────────────────────────────
+// Anciens noms, conservés pour les documents qui les emploient : ils pointent
+// désormais vers les jetons du design system.
+#let bleucerema         = indigo
+#let orangecerema       = corail
+#let bleuexpertise      = indigo-profond
+#let jaunebatiment      = jaune
+#let orangemobilite     = corail
+#let vertinfratransport = olive
+#let vertenvrisque      = vert
+#let bleumerlittoral    = bleu
+// Gris des titres de niveau 5 et des mentions : absent du design system.
+#let gris               = rgb(135, 136, 138)
+
+// ── Polices ───────────────────────────────────────────────────────────────────
+// Marianne (texte courant) est fournie par l'extension : font-paths dans
+// _extension.yml. Les titres sont en Arial gras ; sur un poste sans Arial
+// (Linux), Typst le signale et retombe sur Marianne.
+#let police = "Marianne"
+#let police-titre = ("Arial", "Marianne")
 
 // ── Ressources graphiques ─────────────────────────────────────────────────────
 // Chemins absolus Typst : résolus depuis la racine du projet Quarto (--root),
@@ -208,7 +237,7 @@
   // Le bloc « sticky » reste attaché au paragraphe suivant : un titre n'est
   // jamais laissé seul en bas de page.
   show heading: it => {
-    set text(fill: bleucerema, font: police, hyphenate: false)
+    set text(fill: bleucerema, font: police-titre, hyphenate: false)
     // Un titre justifié s'étire sur toute la largeur, lettres capitales espacées.
     set par(justify: false)
     let corps = if it.level == 1 {
@@ -310,7 +339,7 @@
           dir: ttb,
           spacing: 0pt,
           layout(size => {
-            let style = (size: 24pt, weight: "bold")
+            let style = (font: police-titre, size: 24pt, weight: "bold")
             let mesure = measure(text(..style, title))
             let w = if mesure.width > 16cm { 16cm } else { auto }
             box(
@@ -320,7 +349,7 @@
           }),
           if subtitle != none {
             layout(size => {
-              let style = (size: 18pt, weight: "bold")
+              let style = (font: police-titre, size: 18pt, weight: "bold")
               let mesure = measure(text(..style, subtitle))
               let w = if mesure.width > 16cm { 16cm } else { auto }
               block(
@@ -367,6 +396,9 @@
 
     pagebreak()
   }
+
+  // La couverture n'est pas comptée : la page suivante porte le numéro 1.
+  counter(page).update(1)
 
   // ── Activation du footer pour toutes les pages suivantes ───────────────────
   set page(footer: context {
@@ -454,9 +486,10 @@
   show table.cell: set par(justify: false)
   show table.cell: set text(hyphenate: false)
 
-  // Tableaux Markdown : en-tête plein bleu Cerema, filets horizontaux gris,
-  // lignes alternées, aucun filet vertical. Les fonctions tableau_* et les
-  // tableaux qui fixent fill/stroke conservent leur propre style.
+  // Tableaux Markdown, modèle commun à tous les formats (docx, html) :
+  // en-tête plein indigo à texte blanc gras, filets horizontaux gris, une
+  // ligne sur deux teintée, aucun filet vertical. Les fonctions tableau_* et
+  // les tableaux qui fixent fill/stroke conservent leur propre style.
   set table(
     inset: (x: 8pt, y: 5pt),
     stroke: (x, y) => (bottom: 0.4pt + gris.lighten(40%)),
