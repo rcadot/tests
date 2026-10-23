@@ -1,0 +1,160 @@
+/*-- scss:defaults --*/
+
+// Thème Bootstrap des pages et sites HTML (format cerema-html).
+// Jetons couleur du design system Cerema : mêmes valeurs que cerema.scss.
+$indigo: #282474;
+$indigo-profond: #262069;
+$corail: #EF7757;
+$jaune: #F7D05C;
+$vert: #448D60;
+$bleu: #5971B3;
+$fond-lavande: #E7E4EF;
+$gris-clair: #E7E6E6;
+$gris-tableau: #F2F2F2;
+$blanc: #FFFFFF;
+$noir: #000000;
+
+$police-marianne: Marianne, Arial, sans-serif;
+$police-titre: Arial, "Helvetica Neue", sans-serif;
+$police-citation: Spectral, Georgia, serif;
+
+// Variables Bootstrap et Quarto
+$primary: $indigo;
+$secondary: $corail;
+$body-bg: $blanc;
+$body-color: $noir;
+$link-color: $indigo;
+$font-family-sans-serif: $police-marianne;
+$font-size-root: 17px;
+$line-height-base: 1.55;
+$headings-font-family: $police-titre;
+$headings-font-weight: 700;
+$headings-color: $indigo;
+$border-radius: 0;
+$border-radius-sm: 0;
+$border-radius-lg: 0;
+$code-color: $indigo;
+$code-block-bg: $gris-tableau;
+$code-block-border-color: $gris-clair;
+$toc-color: $indigo;
+
+// Barre de navigation des sites : fond blanc, filet corail
+$navbar-bg: $blanc;
+$navbar-fg: $indigo;
+$navbar-hl: $corail;
+$footer-bg: $indigo-profond;
+$footer-fg: $blanc;
+
+// Encadrés : mêmes correspondances que les formats typst et docx
+$callout-color-note: $indigo;
+$callout-color-tip: $vert;
+$callout-color-warning: darken($jaune, 25%);
+$callout-color-important: $corail;
+$callout-color-caution: darken($corail, 15%);
+
+/*-- scss:rules --*/
+
+:root {
+  --cerema-indigo: #{$indigo};
+  --cerema-corail: #{$corail};
+}
+
+// Bandeau des logos (cerema-html-bandeau.html)
+.cerema-bandeau {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem 0.75rem;
+}
+.cerema-bandeau img { display: block; height: auto; }
+.cerema-bandeau-rf { width: 110px; }
+.cerema-bandeau-logo { width: 190px; }
+
+.navbar {
+  border-bottom: 4px solid $corail;
+}
+
+// Titre du document : Arial gras indigo-profond, filet corail dessous
+#title-block-header .title {
+  font-family: $police-titre;
+  font-weight: 700;
+  color: $indigo-profond;
+  padding-bottom: 0.4em;
+  border-bottom: 4px solid $corail;
+}
+#title-block-header .subtitle {
+  color: $indigo;
+  font-weight: 400;
+}
+
+// Titres de niveau 2 du corps : barre-repère corail, comme sur les diapositives
+// (la marge, qui porte « Sommaire » et « Autres formats », n'est pas concernée)
+h1:not(.title), h2 {
+  border-bottom: none;
+}
+main.content h2 {
+  position: relative;
+  padding-left: 0.9em;
+}
+main.content h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.15em;
+  width: 0.35em;
+  height: 1em;
+  background: $corail;
+}
+h3 { color: $indigo; }
+h4, h5, h6 { color: $indigo; font-family: $police-marianne; }
+
+// Tableaux : en-tête corail à texte noir gras (7,4:1), lignes gris-tableau,
+// filets blancs, sans arrondi
+.table, table:not(.sourceCode) {
+  --bs-table-bg: #{$gris-tableau};
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+table:not(.sourceCode) > thead > tr > th {
+  background: $corail;
+  color: $noir;
+  font-weight: 700;
+  border-bottom: none;
+}
+table:not(.sourceCode) > tbody > tr > td,
+table:not(.sourceCode) > thead > tr > th {
+  border: 2px solid $blanc;
+  padding: 0.4rem 0.7rem;
+}
+table:not(.sourceCode) > tbody > tr > td {
+  background: $gris-tableau;
+}
+caption, .figure-caption, figcaption {
+  color: $noir;
+  font-style: italic;
+  font-size: 0.85rem;
+}
+
+// Verbatim : Spectral italique indigo
+blockquote {
+  font-family: $police-citation;
+  font-style: italic;
+  font-size: 1.2rem;
+  color: $indigo;
+  border-left: 2px solid $indigo;
+  padding-left: 1rem;
+}
+
+// Encadrés : angles droits, fond pâle
+div.callout {
+  border-radius: 0;
+}
+
+// Pied de page des sites
+.nav-footer {
+  color: $blanc;
+  a { color: $blanc; }
+}

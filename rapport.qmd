@@ -7,10 +7,13 @@ author:
     affiliations:
       - name: Cerema
 date: today
-abstract: "Ce document illustre le format cerema-typst : couverture, sommaire, titres, tableaux et encadrés."
+abstract: "Ce document illustre les formats Cerema : titres, tableaux et encadrés, rendus en PDF, Word, PowerPoint, HTML et revealjs."
 format:
   cerema-typst: default
   cerema-revealjs: default
+  cerema-docx: default
+  cerema-pptx: default
+  cerema-html: default
 ---
 
 # Tableaux
