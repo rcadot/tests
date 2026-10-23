@@ -4,7 +4,7 @@ Ce dépôt fournit l'extension Quarto `cerema`, qui définit cinq formats : `ce
 
 ## Prise en main : démarrer un nouveau document
 
-Cet aide-mémoire s'adresse à l'auteur qui reprend un nouveau document avec l'extension, en version 1.2.0.
+Cet aide-mémoire s'adresse à l'auteur qui reprend un nouveau document avec l'extension, en version 1.2.1.
 
 ### Prérequis
 
@@ -81,11 +81,11 @@ Si le document contient du Python, on indique l'interpréteur de l'environnement
 | Je veux changer… | Fichier |
 |---|---|
 | les couleurs | `sources/tokens.json`, puis `uv run python outils/generer_jetons.py` (régénère `cerema-jetons.scss`, `jetons.json` et le bloc de couleurs du gabarit Typst) |
-| la mise en page du PDF | `_extensions/cerema/typst-template.typ` |
+| la mise en page du PDF | `_extensions/cerema/typst/typst-template.typ` |
 | les styles du Word | `outils/construire_reference_docx.py`, puis régénérer `reference.docx` |
 | les dispositions PowerPoint | `outils/construire_reference_pptx.py`, puis régénérer `reference.pptx` |
-| l'aspect des pages HTML | `_extensions/cerema/cerema-html.scss` |
-| la présentation revealjs | `_extensions/cerema/cerema.scss` |
+| l'aspect des pages HTML | `_extensions/cerema/html/cerema-html.scss` |
+| la présentation revealjs | `_extensions/cerema/revealjs/cerema.scss` |
 | les options par défaut d'un format (sommaire, langue, largeur de page HTML…) | `_extensions/cerema/_extension.yml` |
 
 Une option posée dans l'en-tête YAML du document l'emporte sur celle de l'extension.
@@ -253,11 +253,11 @@ Le format présente trois limites.
 
 - Quarto 1.7 télécharge le paquet Typst `@preview/fontawesome` dès qu'un document contient un encadré : sans connexion, la compilation échoue.
 - Le type d'encadré est reconnu par sa couleur par défaut. Une palette `brand` modifiée le rend méconnaissable, et l'encadré prend alors la couleur indigo de la note.
-- Les images de la charte sont appelées par le chemin absolu Typst `/_extensions/cerema/fig/cerema/`, résolu depuis la racine du projet Quarto. Le document doit donc se trouver dans le projet qui contient `_extensions/`.
+- Les images de la charte sont appelées par le chemin absolu Typst `/_extensions/cerema/commun/images/`, résolu depuis la racine du projet Quarto. Le document doit donc se trouver dans le projet qui contient `_extensions/`.
 
 ## Présentation PowerPoint (format cerema-pptx)
 
-Le fichier de référence `_extensions/cerema/reference.pptx` est construit à partir du modèle « Diaporama Cerema 2026 » (`sources/Modele_Diaporama_Cerema_2026.potx`) par le script `outils/construire_reference_pptx.py`. Le script retire les 26 diapositives d'exemple, puis renomme sept des 40 dispositions avec les noms anglais que Pandoc attend et retype leurs zones réservées. Le modèle emploie en effet des zones de texte génériques pour les titres, alors que Pandoc exige des zones de type titre.
+Le fichier de référence `_extensions/cerema/pptx/reference.pptx` est construit à partir du modèle « Diaporama Cerema 2026 » (`sources/Modele_Diaporama_Cerema_2026.potx`) par le script `outils/construire_reference_pptx.py`. Le script retire les 26 diapositives d'exemple, puis renomme sept des 40 dispositions avec les noms anglais que Pandoc attend et retype leurs zones réservées. Le modèle emploie en effet des zones de texte génériques pour les titres, alors que Pandoc exige des zones de type titre.
 
 | Disposition du modèle | Nom attendu par Pandoc |
 |---|---|
@@ -278,12 +278,12 @@ La disposition « Content with Caption » place le texte en haut et l'objet (i
 Le fichier de référence se régénère avec la commande suivante.
 
 ```sh
-uv run python outils/construire_reference_pptx.py sources/Modele_Diaporama_Cerema_2026.potx _extensions/cerema/reference.pptx
+uv run python outils/construire_reference_pptx.py sources/Modele_Diaporama_Cerema_2026.potx _extensions/cerema/pptx/reference.pptx
 ```
 
 ## Document Word (format cerema-docx)
 
-Le fichier de référence `_extensions/cerema/reference.docx` est construit à partir du fichier de référence par défaut de Pandoc par `outils/construire_reference_docx.py`. Le texte courant est en Marianne 11 pt noir et les titres sont en Arial gras indigo. Les titres suivent ceux du PDF : le niveau 1 est en capitales, le niveau 4 en italique corail et le niveau 5 en italique gris. Aucun filet corail ne figure sous le titre du document ni devant les titres de niveau 1. L'en-tête de la première page porte les logos République française et Cerema, celui des pages suivantes un petit logo Cerema. Le pied de page affiche la pagination « n / N ». Le sommaire (`toc`) est intitulé « Sommaire ».
+Le fichier de référence `_extensions/cerema/docx/reference.docx` est construit à partir du fichier de référence par défaut de Pandoc par `outils/construire_reference_docx.py`. Le texte courant est en Marianne 11 pt noir et les titres sont en Arial gras indigo. Les titres suivent ceux du PDF : le niveau 1 est en capitales, le niveau 4 en italique corail et le niveau 5 en italique gris. Aucun filet corail ne figure sous le titre du document ni devant les titres de niveau 1. L'en-tête de la première page porte les logos République française et Cerema, celui des pages suivantes un petit logo Cerema. Le pied de page affiche la pagination « n / N ». Le sommaire (`toc`) est intitulé « Sommaire ».
 
 Les tableaux reçoivent le style Word « Tableau Cerema », au même modèle que le PDF : en-tête indigo à texte blanc gras, filets gris, une ligne sur deux teintée, sans filet vertical. Le filtre `cerema-docx.lua` attribue ce style aux seuls tableaux écrits dans le document. Quarto emploie aussi des tableaux invisibles pour les légendes et les encadrés, qui gardent le style neutre « Table ».
 
@@ -298,7 +298,7 @@ Le fichier de référence se régénère avec les commandes suivantes.
 
 ```sh
 quarto pandoc -o pandoc-reference.docx --print-default-data-file reference.docx
-uv run python outils/construire_reference_docx.py pandoc-reference.docx _extensions/cerema/reference.docx
+uv run python outils/construire_reference_docx.py pandoc-reference.docx _extensions/cerema/docx/reference.docx
 ```
 
 ## Pages et sites HTML (format cerema-html)
@@ -347,8 +347,8 @@ Par ailleurs, dans le format revealjs, l'extension met en noir le texte des en-t
 
 La source unique des couleurs est `sources/tokens.json`, copie du `tokens.json` du design system Cerema. Le générateur `outils/generer_jetons.py` en produit trois sorties.
 
-- `_extensions/cerema/cerema-jetons.scss`, placé en dernier dans `theme:` des formats revealjs et html, car Quarto place en tête les valeurs par défaut des derniers fichiers.
-- `_extensions/cerema/jetons.json`, lu par `cerema_altair.py` et par `outils/construire_reference_docx.py`.
+- `_extensions/cerema/commun/cerema-jetons.scss`, placé en dernier dans `theme:` des formats revealjs et html, car Quarto place en tête les valeurs par défaut des derniers fichiers.
+- `_extensions/cerema/commun/jetons.json`, lu par `cerema_altair.py` et par `outils/construire_reference_docx.py`.
 - Le bloc compris entre `// <jetons>` et `// </jetons>` de `typst-template.typ`.
 
 Les anciens noms de couleurs du gabarit Typst (`bleucerema`, `orangecerema`…) restent disponibles et pointent vers ces jetons.
@@ -363,26 +363,32 @@ uv run python outils/generer_jetons.py
 .
 ├── .github/workflows/rendu.yml   workflow de rendu des cinq formats
 ├── _extensions/cerema/
-│   ├── _extension.yml            définition des cinq formats
-│   ├── cerema.lua                filtre Lua (fonds)
-│   ├── cerema.scss               thème
-│   ├── cerema-jetons.scss        jetons de couleur (généré)
-│   ├── jetons.json               jetons de couleur (généré)
-│   ├── title-slide.html          partial de couverture
-│   ├── cerema-header.html        polices et halo
-│   ├── cerema-after-body.html    habillage et pied de page
-│   ├── typst-template.typ        gabarit du rapport (Typst)
-│   ├── typst-show.typ            passage des métadonnées au gabarit
-│   ├── cerema-docx.lua           filtre Word : tableaux et encadrés
-│   ├── cerema-pptx.lua           filtre PowerPoint (tableaux numérotés)
-│   ├── cerema-html.scss          thème des pages HTML
-│   ├── cerema-html-header.html   polices des pages HTML
-│   ├── cerema-html-bandeau.html  logos du pied de page (HTML)
-│   ├── reference.pptx            référence PowerPoint (générée)
-│   ├── reference.docx            référence Word (générée)
-│   ├── assets/                   logos, bloc-marque RF, halo, motifs
-│   ├── fonts/                    Marianne (graisses 300 à 800)
-│   └── fig/cerema/               images du rapport (couverture, logos, page de fin)
+│   ├── _extension.yml                définition des cinq formats
+│   ├── commun/                       ressources partagées par les formats
+│   │   ├── polices/                  Marianne (graisses 300 à 800)
+│   │   ├── images/                   logos, bloc-marque RF, halo, motifs,
+│   │   │                             couverture et page de fin du rapport
+│   │   ├── cerema-jetons.scss        jetons de couleur SCSS (généré)
+│   │   └── jetons.json               jetons de couleur (généré)
+│   ├── typst/                        rapport PDF
+│   │   ├── typst-template.typ        gabarit du rapport
+│   │   └── typst-show.typ            passage des métadonnées au gabarit
+│   ├── docx/                         document Word
+│   │   ├── reference.docx            fichier de référence (généré)
+│   │   └── cerema-docx.lua           filtre : tableaux et encadrés
+│   ├── pptx/                         présentation PowerPoint
+│   │   ├── reference.pptx            fichier de référence (généré)
+│   │   └── cerema-pptx.lua           filtre : tableaux numérotés
+│   ├── html/                         pages et sites HTML
+│   │   ├── cerema-html.scss          thème
+│   │   ├── cerema-html-header.html   polices
+│   │   └── cerema-html-bandeau.html  logos du pied de page
+│   └── revealjs/                     présentation HTML
+│       ├── cerema.scss               thème
+│       ├── cerema.lua                filtre (fonds)
+│       ├── title-slide.html          partial de couverture
+│       ├── cerema-header.html        polices et halo
+│       └── cerema-after-body.html    habillage et pied de page
 ├── template.qmd                  exemple complet
 ├── rapport.qmd                   exemple de rapport (cinq formats)
 ├── cerema_altair.py              thème Altair

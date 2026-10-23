@@ -17,7 +17,7 @@ dans PowerPoint pour une mise en forme manuelle.
 Usage :
     uv run python outils/construire_reference_pptx.py \
         sources/Modele_Diaporama_Cerema_2026.potx \
-        _extensions/cerema/reference.pptx
+        _extensions/cerema/pptx/reference.pptx
 """
 
 import copy

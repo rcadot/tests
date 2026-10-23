@@ -88,7 +88,7 @@
 |---|---|---|
 | `bleucerema` … `bleumerlittoral` | couleur | Palette du rapport (`bleucerema` #292574, `orangecerema` #EF7757, `gris` #87888A, `jaunebatiment` #F7D05C, `vertinfratransport` #96AB5B, `vertenvrisque` #448D60, `bleumerlittoral` #5A71B4) |
 | `police` | liste | `("Arial", "Liberation Sans")` |
-| `dossier-fig` | texte | `/_extensions/cerema/fig/cerema/`, chemin absolu Typst depuis la racine du projet |
+| `dossier-fig` | texte | `/_extensions/cerema/commun/images/`, chemin absolu Typst depuis la racine du projet |
 | `chemin(p)` | fonction | Retire les échappements Pandoc (`\_`) d'un chemin de métadonnée |
 | `styles-callout` | dictionnaire | Couleur Quarto de l'encadré (hex) vers `(couleur, pictogramme)` Cerema |
 | `prefixe-callout` | state | « Note 1 » transmis au titre d'un encadré référencé |
@@ -100,16 +100,16 @@
 
 | Fichier | Origine | Rôle |
 |---|---|---|
-| `assets/cerema-logo.svg` | Design system Cerema, groupe Logos | Logo polychrome avec signature |
-| `assets/cerema-rf.svg` | Design system Cerema, groupe Logos | Bloc-marque République française |
-| `assets/cerema-halo.png` | Design system Cerema, groupe Motifs | Halo de points corail |
-| `assets/cerema-hachures.svg`, `assets/cerema-trame.svg` | Design system Cerema, groupe Motifs | Fournis, non utilisés (motifs redessinés en CSS) |
-| `fonts/Marianne-*.otf` | Design system Cerema | Light, Regular, Italic, Medium, Bold, BoldItalic, ExtraBold |
-| `fig/cerema/marianne.png`, `fig/cerema/cerema.png` | Fournis par l'utilisateur | Logos de couverture du rapport Typst |
-| `fig/cerema/fond.jpg` | Fourni par l'utilisateur | Photo de couverture par défaut (« photo à remplacer ») |
-| `fig/cerema/fin_rapport.jpg` | Fourni par l'utilisateur | Bloc-marque de la page de fin du rapport |
+| `commun/images/cerema-logo.svg` | Design system Cerema, groupe Logos | Logo polychrome avec signature |
+| `commun/images/cerema-rf.svg` | Design system Cerema, groupe Logos | Bloc-marque République française |
+| `commun/images/cerema-halo.png` | Design system Cerema, groupe Motifs | Halo de points corail |
+| `commun/images/cerema-hachures.svg`, `commun/images/cerema-trame.svg` | Design system Cerema, groupe Motifs | Fournis, non utilisés (motifs redessinés en CSS) |
+| `commun/polices/Marianne-*.otf` | Design system Cerema | Light, Regular, Italic, Medium, Bold, BoldItalic, ExtraBold |
+| `commun/images/marianne.png`, `commun/images/cerema.png` | Fournis par l'utilisateur | Logos de couverture du rapport Typst |
+| `commun/images/fond.jpg` | Fourni par l'utilisateur | Photo de couverture par défaut (« photo à remplacer ») |
+| `commun/images/fin_rapport.jpg` | Fourni par l'utilisateur | Bloc-marque de la page de fin du rapport |
 
-## Dispositions PowerPoint (`reference.pptx`)
+## Dispositions PowerPoint (`pptx/reference.pptx`)
 
 | Nom Pandoc | Disposition du modèle | Zones (type, index) |
 |---|---|---|
@@ -121,7 +121,7 @@
 | Content with Caption | Page avec 1 photo + texte | `title` ; contenu 1 (image) ; `body` 2 (texte) |
 | Blank | Derniere page | inchangée |
 
-## Styles Word (`reference.docx`)
+## Styles Word (`docx/reference.docx`)
 
 | Style | Rendu |
 |---|---|
@@ -146,15 +146,15 @@
 |---|---|---|
 | `rendu_html_et_png` | fonction | Moteur de rendu « cerema » : paquet MIME `text/html` + `image/png` |
 | `ECHELLE_PNG` | float | Facteur d'échelle des PNG (2) |
-| `DOSSIER_POLICES` | Path | `_extensions/cerema/fonts`, enregistré auprès de vl-convert |
+| `DOSSIER_POLICES` | Path | `_extensions/cerema/commun/polices`, enregistré auprès de vl-convert |
 
 ## Jetons couleur générés (`outils/generer_jetons.py`)
 
 | Fichier | Contenu | Lu par |
 |---|---|---|
 | `sources/tokens.json` | Copie du `tokens.json` du design system (source unique) | `outils/generer_jetons.py` |
-| `_extensions/cerema/cerema-jetons.scss` | Variables `$indigo`, `$corail`… | Thèmes revealjs et html (dernier fichier de `theme:`) |
-| `_extensions/cerema/jetons.json` | Nom -> couleur hexadécimale | `cerema_altair.py`, `outils/construire_reference_docx.py` |
+| `_extensions/cerema/commun/cerema-jetons.scss` | Variables `$indigo`, `$corail`… | Thèmes revealjs et html (dernier fichier de `theme:`) |
+| `_extensions/cerema/commun/jetons.json` | Nom -> couleur hexadécimale | `cerema_altair.py`, `outils/construire_reference_docx.py` |
 | `typst-template.typ`, bloc `// <jetons>` | `#let indigo = rgb("#282474")`… | Gabarit Typst (alias `bleucerema`, `orangecerema`… conservés) |
 
 ## Couleurs des encadrés (tous formats)

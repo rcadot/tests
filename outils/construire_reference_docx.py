@@ -18,7 +18,7 @@ déjà tous les styles que Pandoc emploie (« Title », « Heading 1 », « Tabl
 Usage :
     quarto pandoc -o pandoc-reference.docx --print-default-data-file reference.docx
     uv run python outils/construire_reference_docx.py \
-        pandoc-reference.docx _extensions/cerema/reference.docx
+        pandoc-reference.docx _extensions/cerema/docx/reference.docx
 """
 
 import json
@@ -40,6 +40,7 @@ JETONS: dict[str, str] = json.loads(
         Path(__file__).resolve().parent.parent
         / "_extensions"
         / "cerema"
+        / "commun"
         / "jetons.json"
     ).read_text(encoding="utf-8")
 )
@@ -73,13 +74,17 @@ FILET_HEX = eclaircir(GRIS_HEX, 0.40)
 """Filets horizontaux des tableaux (gris éclairci à 40 %, comme le PDF)."""
 
 NOM_STYLE_TABLEAU = "Tableau Cerema"
-"""Style de tableau, repris par le filtre _extensions/cerema/cerema-docx.lua."""
+"""Style de tableau, repris par le filtre _extensions/cerema/docx/cerema-docx.lua."""
 
 POLICE_TEXTE = "Marianne"
 POLICE_TITRE = "Arial"
 
 DOSSIER_FIG = (
-    Path(__file__).resolve().parent.parent / "_extensions" / "cerema" / "fig" / "cerema"
+    Path(__file__).resolve().parent.parent
+    / "_extensions"
+    / "cerema"
+    / "commun"
+    / "images"
 )
 """Logos partagés avec le format cerema-typst."""
 

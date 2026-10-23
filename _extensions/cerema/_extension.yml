@@ -1,12 +1,12 @@
 title: Cerema
 author: Romain Cadot
-version: 1.2.0
+version: 1.2.1
 # Typst 0.12 (Quarto 1.6) requis pour les titres « sticky » du format typst.
 quarto-required: ">=1.6.0"
 contributes:
   formats:
     revealjs:
-      theme: [default, cerema.scss, cerema-jetons.scss]
+      theme: [default, revealjs/cerema.scss, commun/cerema-jetons.scss]
       # Diapositive 16:9 ; 1 pt du modèle PowerPoint (960 x 540 pt) = 4/3 px.
       width: 1280
       height: 720
@@ -19,32 +19,32 @@ contributes:
       date-format: "MMMM YYYY"
       fig-align: center
       template-partials:
-        - title-slide.html
+        - revealjs/title-slide.html
       include-in-header:
-        - cerema-header.html
+        - revealjs/cerema-header.html
       include-after-body:
-        - cerema-after-body.html
+        - revealjs/cerema-after-body.html
       filters:
-        - cerema.lua
+        - revealjs/cerema.lua
       format-resources:
-        - assets/cerema-logo.svg
-        - assets/cerema-rf.svg
-        - assets/cerema-halo.png
-        - fonts/Marianne-Light.otf
-        - fonts/Marianne-Regular.otf
-        - fonts/Marianne-RegularItalic.otf
-        - fonts/Marianne-Medium.otf
-        - fonts/Marianne-Bold.otf
-        - fonts/Marianne-BoldItalic.otf
-        - fonts/Marianne-ExtraBold.otf
+        - commun/images/cerema-logo.svg
+        - commun/images/cerema-rf.svg
+        - commun/images/cerema-halo.png
+        - commun/polices/Marianne-Light.otf
+        - commun/polices/Marianne-Regular.otf
+        - commun/polices/Marianne-RegularItalic.otf
+        - commun/polices/Marianne-Medium.otf
+        - commun/polices/Marianne-Bold.otf
+        - commun/polices/Marianne-BoldItalic.otf
+        - commun/polices/Marianne-ExtraBold.otf
     typst:
       template-partials:
-        - typst-template.typ
-        - typst-show.typ
+        - typst/typst-template.typ
+        - typst/typst-show.typ
       papersize: a4
       lang: fr
       region: FR
-      font-paths: fonts
+      font-paths: commun/polices
       # Le sommaire stylisé est produit par le gabarit ; toc: false le retire.
       toc: true
       toc-depth: 3
@@ -60,9 +60,9 @@ contributes:
     pptx:
       # Construit depuis sources/Modele_Diaporama_Cerema_2026.potx par
       # outils/construire_reference_pptx.py (dispositions renommées pour Pandoc).
-      reference-doc: reference.pptx
+      reference-doc: pptx/reference.pptx
       filters:
-        - cerema-pptx.lua
+        - pptx/cerema-pptx.lua
       lang: fr
       date-format: "MMMM YYYY"
       slide-level: 2
@@ -77,9 +77,9 @@ contributes:
     docx:
       # Construit depuis le fichier de référence de Pandoc par
       # outils/construire_reference_docx.py.
-      reference-doc: reference.docx
+      reference-doc: docx/reference.docx
       filters:
-        - cerema-docx.lua
+        - docx/cerema-docx.lua
       lang: fr
       date-format: "MMMM YYYY"
       toc: true
@@ -95,7 +95,7 @@ contributes:
         echo: false
         warning: false
     html:
-      theme: [cosmo, cerema-html.scss, cerema-jetons.scss]
+      theme: [cosmo, html/cerema-html.scss, commun/cerema-jetons.scss]
       # Colonne de contenu élargie (800 px par défaut dans Quarto)
       grid:
         body-width: 1050px
@@ -104,19 +104,19 @@ contributes:
       toc: true
       toc-title: "Sommaire"
       include-in-header:
-        - cerema-html-header.html
+        - html/cerema-html-header.html
       include-before-body:
-        - cerema-html-bandeau.html
+        - html/cerema-html-bandeau.html
       format-resources:
-        - assets/cerema-logo.svg
-        - assets/cerema-rf.svg
-        - fonts/Marianne-Light.otf
-        - fonts/Marianne-Regular.otf
-        - fonts/Marianne-RegularItalic.otf
-        - fonts/Marianne-Medium.otf
-        - fonts/Marianne-Bold.otf
-        - fonts/Marianne-BoldItalic.otf
-        - fonts/Marianne-ExtraBold.otf
+        - commun/images/cerema-logo.svg
+        - commun/images/cerema-rf.svg
+        - commun/polices/Marianne-Light.otf
+        - commun/polices/Marianne-Regular.otf
+        - commun/polices/Marianne-RegularItalic.otf
+        - commun/polices/Marianne-Medium.otf
+        - commun/polices/Marianne-Bold.otf
+        - commun/polices/Marianne-BoldItalic.otf
+        - commun/polices/Marianne-ExtraBold.otf
       crossref:
         tbl-title: "Tableau"
         fig-title: "Figure"

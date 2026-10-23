@@ -51,7 +51,7 @@
 // ── Ressources graphiques ─────────────────────────────────────────────────────
 // Chemins absolus Typst : résolus depuis la racine du projet Quarto (--root),
 // ils restent valides pour un .qmd rangé dans un sous-dossier.
-#let dossier-fig = "/_extensions/cerema/fig/cerema/"
+#let dossier-fig = "/_extensions/cerema/commun/images/"
 
 // Pandoc échappe les métadonnées comme du balisage Typst : « mon_logo.png »
 // arrive sous la forme « mon\_logo.png ». On retire ces barres obliques.
