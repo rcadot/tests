@@ -207,7 +207,7 @@ uv run python outils/construire_reference_docx.py pandoc-reference.docx _extensi
 
 ## Pages et sites HTML (format cerema-html)
 
-Le thème est un thème Bootstrap, `cerema-html.scss`, fondé sur cosmo. Les polices Marianne sont déclarées dans `cerema-html-header.html`, et `cerema-html-bandeau.html` insère en tête de page le bandeau des logos République française et Cerema.
+Le thème est un thème Bootstrap, `cerema-html.scss`, fondé sur cosmo. Les polices Marianne sont déclarées dans `cerema-html-header.html`, et `cerema-html-bandeau.html` place les logos République française et Cerema dans le pied de page.
 
 - Titre : Arial gras indigo-profond, souligné de corail. Les titres de niveau 2 sont précédés d'une barre corail.
 - Tableaux : en-tête corail et lignes gris-tableau.
@@ -225,7 +225,7 @@ format: cerema-html
 
 Les polices et les logos sont copiés à côté de chaque page rendue, y compris dans les sous-dossiers.
 
-Sur une page isolée, le bandeau des logos s'affiche en tête de page. Sur un site (barre de navigation ou pied de page Quarto), un script le déplace dans le pied de page, à gauche ; si le site ne déclare pas de pied de page, l'extension en crée un pour y loger les logos.
+Le script de `cerema-html-bandeau.html` place les logos à gauche du pied de page, sur une page isolée comme sur un site. Si la page ne déclare pas de pied de page, l'extension en crée un, de même structure que celui de Quarto. Sans JavaScript, les logos restent en tête de page.
 
 ## Accessibilité
 
@@ -263,7 +263,7 @@ Par ailleurs, l'extension met en noir le texte des en-têtes de tableau, ce qui 
 │   ├── cerema-docx.lua           filtre Word (style des tableaux)
 │   ├── cerema-html.scss          thème des pages HTML
 │   ├── cerema-html-header.html   polices des pages HTML
-│   ├── cerema-html-bandeau.html  bandeau des logos
+│   ├── cerema-html-bandeau.html  logos du pied de page (HTML)
 │   ├── reference.pptx            référence PowerPoint (générée)
 │   ├── reference.docx            référence Word (générée)
 │   ├── assets/                   logos, bloc-marque RF, halo, motifs

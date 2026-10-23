@@ -1,21 +1,22 @@
 <!-- Bloc-marque République française et logo Cerema, associés sur tous les supports.
-     Page isolée : bandeau en tête de page. Page d'un site (barre de navigation ou
-     pied de page Quarto) : les logos passent dans le pied de page, à gauche. -->
+     Le script les place dans le pied de page, à gauche : celui du site Quarto s'il
+     existe, sinon un pied de page de même structure, créé ici. Sans JavaScript, le
+     bandeau reste en tête de page. -->
 <header class="cerema-bandeau">
   <img class="cerema-bandeau-rf" src="cerema-rf.svg" alt="République française">
   <img class="cerema-bandeau-logo" src="cerema-logo.svg" alt="Cerema, climat et territoires de demain">
 </header>
 <script>
+// Posée avant le premier affichage : masque le bandeau en tête (cerema-html.scss).
+document.documentElement.classList.add("cerema-js");
 document.addEventListener("DOMContentLoaded", () => {
   const bandeau = document.querySelector(".cerema-bandeau");
-  const site = document.querySelector("#quarto-header, .nav-footer");
-  if (!bandeau || !site) return;
+  if (!bandeau) return;
   bandeau.classList.add("cerema-bandeau-pied");
   let gauche = document.querySelector(".nav-footer-left");
   if (!gauche) {
-    // Site sans pied de page déclaré : on crée celui de Quarto, même structure.
     const pied = document.createElement("footer");
-    pied.className = "footer";
+    pied.className = "footer cerema-pied-cree";
     pied.innerHTML = '<div class="nav-footer"><div class="nav-footer-left"></div>'
       + '<div class="nav-footer-center"></div><div class="nav-footer-right"></div></div>';
     document.body.append(pied);
