@@ -3,13 +3,13 @@
 Source unique : ``sources/tokens.json``, copie du fichier ``project/tokens.json``
 du design system Cerema. Le script écrit :
 
-- ``_extensions/cerema/cerema-jetons.scss`` : variables SCSS, partagées par les
+- ``_extensions/cerema/commun/cerema-jetons.scss`` : variables SCSS, partagées par les
   thèmes revealjs et html (le fichier doit venir en dernier dans ``theme:``,
   car Quarto place en tête les valeurs par défaut des derniers fichiers) ;
-- ``_extensions/cerema/jetons.json`` : nom -> couleur hexadécimale, lu par
+- ``_extensions/cerema/commun/jetons.json`` : nom -> couleur hexadécimale, lu par
   ``cerema_altair.py`` et ``outils/construire_reference_docx.py`` ;
 - le bloc compris entre ``// <jetons>`` et ``// </jetons>`` de
-  ``_extensions/cerema/typst-template.typ``.
+  ``_extensions/cerema/typst/typst-template.typ``.
 
 Usage :
     uv run python outils/generer_jetons.py
@@ -22,9 +22,9 @@ from pathlib import Path
 RACINE = Path(__file__).resolve().parent.parent
 SOURCE = RACINE / "sources" / "tokens.json"
 EXTENSION = RACINE / "_extensions" / "cerema"
-SCSS = EXTENSION / "cerema-jetons.scss"
-JSON = EXTENSION / "jetons.json"
-TYPST = EXTENSION / "typst-template.typ"
+SCSS = EXTENSION / "commun" / "cerema-jetons.scss"
+JSON = EXTENSION / "commun" / "jetons.json"
+TYPST = EXTENSION / "typst" / "typst-template.typ"
 
 EN_TETE = (
     "Généré par outils/generer_jetons.py depuis sources/tokens.json : ne pas modifier."

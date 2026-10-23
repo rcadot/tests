@@ -1,5 +1,9 @@
 # Journal des modifications
 
+## 1.2.1
+
+- Extension rangée par format : `commun/` (polices, images, jetons), `typst/`, `docx/`, `pptx/`, `html/`, `revealjs/`. Les noms de format et les en-têtes YAML des documents ne changent pas.
+
 ## 1.2.0
 
 - Jetons de couleur générés depuis le design system (source unique).

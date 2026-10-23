@@ -95,3 +95,13 @@
   upload-artifact@v7 ; tags vérifiés par git ls-remote).
 - Non fait : choix d'une disposition PowerPoint par classe (`.fin`…) : Pandoc ne le permet pas, il faudrait
   un post-traitement python-pptx après rendu. Encadrés hors ligne (fontawesome) non résolu.
+
+## Version 1.2.1 (rangement)
+- `_extensions/cerema/` rangé par format : `commun/{polices,images}`, `commun/cerema-jetons.scss`,
+  `commun/jetons.json`, `typst/`, `docx/`, `pptx/`, `html/`, `revealjs/`. Fichiers déplacés par `git mv`.
+- Chemins à jour : `_extension.yml` (theme, partials, filtres, reference-doc, format-resources,
+  `font-paths: commun/polices`), `dossier-fig` du gabarit Typst (`/_extensions/cerema/commun/images/`),
+  `cerema_altair.py`, scripts `outils/`, README, dictionnaire.
+- `format-resources` copie toujours les fichiers à plat à côté du document : les URL relatives des en-têtes
+  HTML (`Marianne-*.otf`, `cerema-rf.svg`…) restent valables, et `.gitignore` aussi.
+- Vérifié : dix rendus, site avec page en sous-dossier, diapositives revealjs (halo, logos, polices).
