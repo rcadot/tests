@@ -103,7 +103,7 @@ import altair as alt
 import cerema_altair  # noqa: F401
 ```
 
-Les graphiques Altair chargent Vega depuis un CDN : une connexion est donc nécessaire lors de la projection, sauf si le document est rendu avec l'option `embed-resources`.
+Les graphiques Altair chargent Vega depuis un CDN : une connexion est donc nécessaire lors de la projection.
 
 ## Accessibilité
 
